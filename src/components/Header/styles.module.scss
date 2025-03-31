@@ -1,0 +1,16 @@
+@use "../../styles/global.scss";
+.header {
+    position: sticky;
+    background-color: global.$color-primary ;
+    width: 100vw;
+    height: 10vh;
+}
+
+.header::after {
+    position: absolute;
+    content: '';
+    background-color: global.$color-primary-2;
+    width: 100vw;
+    height: 2vh;
+    bottom: 0;
+}

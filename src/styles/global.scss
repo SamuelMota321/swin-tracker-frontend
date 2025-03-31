@@ -1,0 +1,19 @@
+$color-primary: #1E88E5;
+$color-primary-2: #003366;
+$color-secondary: #B0BEC5;
+$font-weight: 800;
+$font-light: 400;
+$background: #E3F2FD;
+$gray-1: #F8F9FA;
+$gray-2: #E9ECEF;
+$gray-3: #868E96;
+$font-stack: "Inter", sans-serif;
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+#root {
+    height: 100vh;
+}
