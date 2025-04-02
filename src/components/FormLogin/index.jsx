@@ -2,13 +2,13 @@ import { Link } from "react-router-dom"
 import { Button } from "../Button"
 import { Input } from "../Input"
 import { useContext } from "react"
-import { UserContext } from "../../providers/UserContext"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema } from "../../schemas/LoginSchema"
+import { AppContext } from "../../providers/AppContext"
 
 export const FormLogin = () => {
-    const { userLogin, error } = useContext(UserContext);
+    const { userLogin, error } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(loginSchema)
     });

@@ -1,6 +1,6 @@
 import { FormLogin } from "../../components/FormLogin"
-import { Input } from "../../components/Input"
-import styles from "./styles.module.scss" 
+import { Search } from "../../components/Search"
+import styles from "./styles.module.scss"
 
 export const Home = () => {
     return (
@@ -14,6 +14,7 @@ export const Home = () => {
                 </div>
                 <div>
                     <h1>Procurar atleta</h1>
+                    <Search />
                 </div>
             </section>
         </>
