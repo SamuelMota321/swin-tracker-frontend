@@ -17,7 +17,7 @@ export const Search = () => {
         <div>
             <Input
                 type="text"
-                search={true}
+                search="true"
                 onChange={(e) => {
                     setSearchInputContent(e.target.value);
                     submit(searchInputContent);

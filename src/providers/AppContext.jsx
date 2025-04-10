@@ -13,11 +13,12 @@ export const AppContextPovider = ({ children }) => {
     const [user, setUser] = useState(false);
     const [error, setError] = useState("");
     const [searchList, setSearchList] = useState([]);
+    const [athleteList, setAthleteList] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
-        setError(false)
+        setError("")
     }, [location])
 
     const userLogin = async (formData) => {
@@ -25,9 +26,9 @@ export const AppContextPovider = ({ children }) => {
             const { data } = await api.post("/auth/login", formData, {
                 headers: { "Content-Type": "application/json" }
             });
-
             localStorage.setItem("@TOKEN", data.token);
             navigate("/competicoes");
+            setUserState(data.user)
             setUser(true);
         } catch (error) {
             console.log(error);
@@ -41,6 +42,44 @@ export const AppContextPovider = ({ children }) => {
         navigate("/");
     }
 
+    const userRegister = async (formData) => {
+        try {
+            const { data } = await api.post("");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const competitionRegister = async (formData) => {
+        try {
+            const token = localStorage.getItem("@TOKEN");
+            const authorization = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            const { data } = await api.post("/tecnico/criar-competicao", formData, authorization);
+            // navigate("/competicoes");
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getAthleteList = async () => {
+        try {
+            const token = localStorage.getItem("@TOKEN");
+            const authorization = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            const { data } = await api.get("/tecnico/meus-atletas", authorization);
+            setAthleteList(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     // Essa parte do código pode ser passada futuramente para um Athlete 
     // context assim como a suas variáveis quando tiver outras funções
@@ -60,10 +99,13 @@ export const AppContextPovider = ({ children }) => {
             userLogin,
             userLogout,
             searchAthletes,
+            getAthleteList,
+            competitionRegister,
             error,
             userState,
             user,
-            searchList
+            searchList,
+            athleteList
         }}>
             {children}
         </AppContext.Provider>
