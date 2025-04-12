@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Controller } from "react-hook-form";
 
-export const SeriesCard = ({ proofIndex, setValue, athleteList, control, seriesIndex, seriesField, seriesFieldArray, onSeriesRemove }) => {
+export const SeriesCard = ({ proofIndex, setValue, athleteList, control, seriesIndex, errors, onSeriesRemove }) => {
   const selectedPath = `proofs.${proofIndex}.series.${seriesIndex}.athletes`;
   const seriesIndexPath = `proofs.${proofIndex}.series.${seriesIndex}.serieNumber`;
 

@@ -59,7 +59,7 @@ export const AppContextPovider = ({ children }) => {
                 },
             };
             const { data } = await api.post("/tecnico/criar-competicao", formData, authorization);
-            // navigate("/competicoes");
+            navigate("/competicoes");
 
         } catch (error) {
             console.log(error);

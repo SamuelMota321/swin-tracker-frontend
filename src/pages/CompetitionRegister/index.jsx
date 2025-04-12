@@ -30,8 +30,7 @@ export const CompetitionRegister = () => {
     const proofs = useFieldArray({ name: "proofs", control });
 
     const onSubmit = (formData) => {
-        console.log("Dados válidos:", formData);
-        // competitionRegister(formData)
+        competitionRegister(formData)
     };
 
     useEffect(() => {
@@ -47,7 +46,7 @@ export const CompetitionRegister = () => {
 
                 <Select
                     label="Tipo de piscina:"
-                    values={["Selecione um tipo de piscina", "25M", "50M"]}
+                    values={["Selecione um tipo de piscina", "25", "50"]}
                     {...register("poolType")}
                     error={errors.poolType}
                 />
@@ -74,7 +73,7 @@ export const CompetitionRegister = () => {
                     Adicionar prova
                 </button>
 
-                <Button type="submit" text="Enviar"/>
+                <Button type="submit" text="Enviar" />
             </form>
         </div>
     );

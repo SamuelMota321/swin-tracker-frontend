@@ -2,8 +2,19 @@ import { z } from "zod";
 
 export const competitionRegisterSchema = z.object({
   name: z.string().min(1, "O nome é obrigatório"),
-  date: z.string().min(1, "A data é obrigatória"), // pode usar z.coerce.date() se quiser validar como Date
-  poolType: z.enum(["25M", "50M"], {
+  date: z.preprocess((arg) => {
+    if (typeof arg === "string" || arg instanceof Date) {
+      const date = new Date(arg);
+      if (!isNaN(date.getTime())) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}/${month}/${day}`;
+      }
+    }
+    return arg;
+  }, z.string().regex(/^\d{4}\/\d{2}\/\d{2}$/, "Data deve estar no formato YYYY/MM/DD")),
+  poolType: z.enum(["25", "50"], {
     errorMap: () => ({ message: "Selecione um tipo de piscina válido" }),
   }),
   proofs: z
@@ -20,6 +31,8 @@ export const competitionRegisterSchema = z.object({
         styleType: z.enum(["Borboleta", "Crawl", "Peito", "Costas", "Medley"], {
           errorMap: () => ({ message: "Selecione um estilo válido" }),
         }),
+        proofOrder: z
+          .number(),
         series: z
           .array(
             z.object({

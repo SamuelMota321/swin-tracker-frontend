@@ -1,0 +1,40 @@
+{
+  "name": "Torneio a",
+  "date": "2025/04/10",
+  "poolType": "50",
+  "proofs": [
+    {
+      "distance": 200,
+      "styleType": "Borboleta",
+      "proofOrder": 1,
+      "series": [
+        {
+          "serieNumber": 1,
+          "athletes": [
+            1
+          ]
+        }
+      ]
+    }
+  ]
+}
+{
+  "name": "Torneio a",
+  "date": "2025/04/10",
+  "poolType": "50",
+  "proofs": [
+    {
+      "distance": 200,
+      "styleType": "Borboleta",
+      "proofOrder": 1,
+      "series": [
+        {
+          "serieNumber": 1,
+          "athletes": [
+            1
+          ]
+        }
+      ]
+    }
+  ]
+}
