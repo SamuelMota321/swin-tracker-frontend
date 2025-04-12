@@ -3,8 +3,8 @@ export const AthleteCard = ({ name, competition, proof, partials }) => {
 
     return (
         <li>
+            {/* <p>{competition}</p> */}
             <p>{name}</p>
-            <p>{competition}</p>
         </li>
     )
 

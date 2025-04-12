@@ -4,7 +4,7 @@ import { AthleteCard } from "./AthetesCard";
 import { AppContext } from "../../providers/AppContext";
 
 export const Search = () => {
-    const { searchAthletes, searchList, error } = useContext(AppContext)
+    const { searchAthletes, searchList } = useContext(AppContext)
     const [searchInputContent, setSearchInputContent] = useState("");
 
 
