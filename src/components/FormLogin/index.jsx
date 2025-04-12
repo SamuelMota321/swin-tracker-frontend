@@ -4,8 +4,8 @@ import { Input } from "../Input"
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { loginSchema } from "../../schemas/LoginSchema"
 import { AppContext } from "../../providers/AppContext"
+import { loginSchema } from "../../schemas/LoginSchema"
 
 export const FormLogin = () => {
     const { userLogin, error } = useContext(AppContext);
@@ -16,7 +16,7 @@ export const FormLogin = () => {
     const submit = (formData) => {
         userLogin(formData);
     }
-    
+
 
     return (
         <div>
@@ -28,16 +28,17 @@ export const FormLogin = () => {
                     {...register("login")}
                     error={errors.login}
                 />
+
                 <Input
                     type="password"
                     placeholder="Digite sua senha"
                     label="Senha"
                     {...register("password")}
                     error={errors.password}
-               />
+                />
                 <Button text="Continuar" />
             </form>
-            <p>Não possui conta?<Link to="/registrar">Clique Aqui!</Link> </p>
+            <p>Não possui conta?<Link to="/registrar">Clique Aqui!</Link></p>
         </div>
     )
 }
