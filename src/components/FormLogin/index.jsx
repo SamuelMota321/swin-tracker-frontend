@@ -14,7 +14,7 @@ export const FormLogin = () => {
     });
 
     const submit = (formData) => {
-        userLogin(formData);
+        userLogin(formData)
     }
 
 
@@ -36,7 +36,7 @@ export const FormLogin = () => {
                     {...register("password")}
                     error={errors.password}
                 />
-                <Button text="Continuar" />
+                <Button type="submit" text="Continuar" />
             </form>
             <p>Não possui conta?<Link to="/registrar">Clique Aqui!</Link></p>
         </div>

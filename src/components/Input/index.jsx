@@ -6,11 +6,11 @@ import { FaSearch } from "react-icons/fa";
 
 
 
-export const Input = forwardRef(({ ...rest }, ref, className) => {
+export const Input = forwardRef(({ ...rest }, ref) => {
 	const [passwordVisibility, setPasswordVisibility] = useState(false);
 
 	return (
-		<div className={className}>
+		<div className={rest.className}>
 			<label className={styles.label} >
 				{rest.label}
 				<input

@@ -1,5 +1,5 @@
 import { FormLogin } from "../../components/FormLogin"
-import { Search } from "../../components/Search"
+import { SearchAthletes } from "../../components/Search"
 import styles from "./styles.module.scss"
 
 export const Home = () => {
@@ -14,7 +14,7 @@ export const Home = () => {
                 </div>
                 <div>
                     <h1>Procurar atleta</h1>
-                    <Search />
+                    <SearchAthletes />
                 </div>
             </section>
         </>

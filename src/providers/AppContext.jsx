@@ -19,6 +19,8 @@ export const AppContextPovider = ({ children }) => {
 
   useEffect(() => {
     setError("")
+    setAthleteList([])
+    setSearchList([])
   }, [location])
 
   const userLogin = async (formData) => {
@@ -99,8 +101,39 @@ export const AppContextPovider = ({ children }) => {
   const searchAthletes = async (searchTerm) => {
     try {
       const { data } = await api.get(`/parciais?atleta=${searchTerm}`)
+      console.log(data)
       setSearchList(data)
     } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const searchCompetition = async (searchTerm) => {
+    try {
+      const token = localStorage.getItem("@TOKEN")
+      const authorization = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+      const { data } = await api.get(`/competicao/${searchTerm}`, authorization)
+      setSearchList(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const patchPartials = async (formData) => {
+    try {
+      const token = localStorage.getItem("@TOKEN")
+      const authorization = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+      const { data } = await api.patch("/tecnico/atualizar-parciais", formData, authorization)
+    }
+    catch (error) {
       console.log(error)
     }
   }
@@ -114,11 +147,13 @@ export const AppContextPovider = ({ children }) => {
       getAthleteList,
       competitionRegister,
       registerAthlete,
+      searchCompetition,
+      patchPartials,
       error,
       userState,
       user,
       searchList,
-      athleteList
+      athleteList,
     }}>
       {children}
     </AppContext.Provider>

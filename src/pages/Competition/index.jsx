@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { Button } from "../../components/Button"
-import { Input } from "../../components/Input"
+import { SearchCompetition } from "../../components/Search";
 
 export const Competition = () => {
     const navigate = useNavigate();
@@ -10,13 +10,8 @@ export const Competition = () => {
             <section>
                 <div>
                     <Button onClick={() => navigate("/registrar-competicao")} text="Registar Competição" />
-                    <Input
-                        type="text"
-                        placeholder="Pesquisar Atleta"
-                        search
-                    />
-
-                </div> 
+                    <SearchCompetition />
+                </div>
             </section>
         </>
     )

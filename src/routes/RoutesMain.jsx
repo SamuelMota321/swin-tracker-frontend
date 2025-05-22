@@ -6,11 +6,14 @@ import { MyAccount } from "../pages/MyAccount/index"
 import { Register } from "../pages/Register/index"
 import { ProtectedRoutes } from "./ProtectedRoutes"
 import { CompetitionRegister } from "../pages/CompetitionRegister"
+import { useContext } from "react"
+import { AppContext } from "../providers/AppContext"
 
 export const RoutesMain = () => {
+    const { user } = useContext(AppContext)
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={user ?<Competition/> : <Home />} />
             <Route path="/registrar" element={<Register />} />
             <Route path="/competicoes" element={<ProtectedRoutes />} >
                 <Route index element={<Competition />} />
