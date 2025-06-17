@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AppContext } from "../../providers/AppContext"
 import { loginSchema } from "../../schemas/LoginSchema"
+import styles from "./styles.module.scss"
 
 export const FormLogin = () => {
     const { userLogin, error } = useContext(AppContext);
@@ -17,10 +18,11 @@ export const FormLogin = () => {
         userLogin(formData)
     }
 
-
     return (
         <div>
-            <form onSubmit={handleSubmit(submit)}>
+            <form onSubmit={handleSubmit(submit)} className={styles.form}>
+                {error && <div className={styles.errorMessage}>{error}</div>}
+                
                 <Input
                     type="text"
                     placeholder="Digite seu usuário"
@@ -36,9 +38,19 @@ export const FormLogin = () => {
                     {...register("password")}
                     error={errors.password}
                 />
-                <Button type="submit" text="Continuar" />
+                
+                <Button 
+                    type="submit" 
+                    text="Continuar" 
+                    className={styles.submitButton}
+                    size="large"
+                />
             </form>
-            <p>Não possui conta?<Link to="/registrar">Clique Aqui!</Link></p>
+            
+            <p className={styles.registerLink}>
+                Não possui conta?
+                <Link to="/registrar">Clique Aqui!</Link>
+            </p>
         </div>
     )
 }

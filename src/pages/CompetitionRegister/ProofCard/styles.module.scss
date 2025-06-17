@@ -1,0 +1,85 @@
+@use "../../../styles/global.scss" as global;
+
+.proofCard {
+    background: global.$color-gray-light;
+    border: 1px solid global.$color-border;
+    border-radius: global.$border-radius;
+    padding: global.$spacing-lg;
+    margin-bottom: global.$spacing-md;
+
+    .proofHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: global.$spacing-md;
+
+        h4 {
+            color: global.$color-text-primary;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .removeButton {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: global.$border-radius-small;
+            padding: global.$spacing-xs global.$spacing-sm;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: #c82333;
+                transform: translateY(-1px);
+            }
+        }
+    }
+
+    .proofInputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: global.$spacing-md;
+        margin-bottom: global.$spacing-lg;
+    }
+
+    .seriesSection {
+        .sectionTitle {
+            color: global.$color-text-primary;
+            margin-bottom: global.$spacing-md;
+            font-size: 1.1rem;
+        }
+
+        .addSeriesButton {
+            background: global.$color-white;
+            color: global.$color-primary;
+            border: 2px dashed global.$color-primary;
+            border-radius: global.$border-radius-small;
+            padding: global.$spacing-sm global.$spacing-md;
+            font-weight: global.$font-weight-medium;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: global.$spacing-md;
+
+            &:hover {
+                background: global.$color-primary;
+                color: global.$color-white;
+                border-style: solid;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .proofCard {
+        .proofInputs {
+            grid-template-columns: 1fr;
+        }
+
+        .proofHeader {
+            flex-direction: column;
+            gap: global.$spacing-sm;
+            text-align: center;
+        }
+    }
+}

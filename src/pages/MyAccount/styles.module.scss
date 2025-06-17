@@ -1,0 +1,40 @@
+@use "../../styles/global.scss" as global;
+
+.container {
+    min-height: calc(100vh - 70px);
+    background: global.$color-background;
+    padding: global.$spacing-xl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    background: global.$color-white;
+    padding: global.$spacing-xxl;
+    border-radius: global.$border-radius-large;
+    box-shadow: global.$shadow-md;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+
+    h1 {
+        color: global.$color-text-primary;
+        margin-bottom: global.$spacing-lg;
+    }
+
+    p {
+        color: global.$color-text-secondary;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: global.$spacing-md;
+    }
+
+    .content {
+        padding: global.$spacing-lg;
+    }
+}

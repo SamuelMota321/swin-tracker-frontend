@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FaPen } from "react-icons/fa"
 import { Button } from '../../Button'
 import { AppContext } from '../../../providers/AppContext'
-
+import styles from '../styles.module.scss'
 
 const TimeInput = forwardRef(({ label, name, error, onChange: rhfOnChange, onBlur: rhfOnBlur, value: propValue, ...rest }, ref) => {
   const inputId = `input-${label}-${name || 'time'}` 
@@ -75,7 +75,7 @@ const TimeInput = forwardRef(({ label, name, error, onChange: rhfOnChange, onBlu
 
   return (
     <div style={{ marginBottom: '10px' }}>
-      <label htmlFor={inputId} style={{ display: 'block', marginBottom: '5px' }}>{label}</label>
+      <label htmlFor={inputId} style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>{label}</label>
       <input
         ref={ref}
         type="text"
@@ -87,15 +87,23 @@ const TimeInput = forwardRef(({ label, name, error, onChange: rhfOnChange, onBlu
         placeholder="ss.SS"
         maxLength={5}
         aria-invalid={error ? "true" : "false"}
+        style={{
+          width: '100%',
+          padding: '12px 16px',
+          border: '2px solid #DEE2E6',
+          borderRadius: '12px',
+          fontSize: '1rem',
+          fontFamily: 'Inter, sans-serif',
+          background: '#FFFFFF',
+          transition: 'all 0.2s ease',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)'
+        }}
         {...rest}
       />
-      {error && <span style={{ color: 'red', fontSize: '0.8em', display: 'block', marginTop: '2px' }}>{error.message}</span>}
+      {error && <span style={{ color: '#dc3545', fontSize: '0.85rem', display: 'block', marginTop: '4px' }}>{error.message}</span>}
     </div>
   )
 })
-
-
-
 
 export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll }) => {
   const [times, setTimes] = useState(() => {
@@ -140,7 +148,6 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
   }
 
   const handleFinalSubmit = async () => {
-
     const payload = data.map(item => ({
       partialId: item.partial.id,
       time: parseTimeToNumber(times[item.partial.id]),
@@ -151,7 +158,6 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
 
     patchPartials(validPayload)
     console.log("Submitting payload:", validPayload)
-
 
     if (onSubmitAll) {
       onSubmitAll(validPayload)
@@ -175,10 +181,10 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
   let count = 0
 
   return (
-    <li>
+    <li className={styles.competitionCard}>
       <h1>{competitionName}</h1>
       <p>{proofName}</p>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      <div className={styles.partialsList}>
         {data.map((item, i) => {
           const currentAthlete = item.partial.athlete.name
           if (currentAthlete !== lastAthleteName) {
@@ -193,10 +199,10 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
           const currentTime = times[partialId] 
 
           return (
-            <div key={partialId || i} style={{ border: '1px solid #eee', padding: '15px', borderRadius: '5px' }}>
+            <div key={partialId || i} className={styles.partialItem}>
               <h2>{currentAthlete}</h2>
               {isEditing ? (
-                <div>
+                <div className={styles.editForm}>
                   <Controller
                     name={`time_${partialId}`}
                     control={control}
@@ -212,26 +218,47 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
                       />
                     )}
                   />
-                  <div style={{ marginTop: '10px', display: 'flex', gap: '10px' }}>
-                    <Button type="button" text="Salvar" onClick={() => {
-                      handleFinalSubmit()
-                      handleSaveClick(partialId)
-                    }} />
-                    <Button type="button" text="Cancelar" onClick={handleCancelEdit} variant="secondary" />
+                  <div className={styles.buttonGroup}>
+                    <Button 
+                      type="button" 
+                      text="Salvar" 
+                      onClick={() => {
+                        handleFinalSubmit()
+                        handleSaveClick(partialId)
+                      }} 
+                      size="small"
+                    />
+                    <Button 
+                      type="button" 
+                      text="Cancelar" 
+                      onClick={handleCancelEdit} 
+                      variant="secondary" 
+                      size="small"
+                    />
                   </div>
                 </div>
               ) : (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div className={styles.timeDisplay}>
                   <p>Tempo: {currentTime || "N/A"}</p>
-                  <FaPen size={15} color='black' onClick={() => handleEditClick(partialId)} style={{ cursor: 'pointer' }} />
+                  <FaPen 
+                    size={15} 
+                    color='#1976D2' 
+                    onClick={() => handleEditClick(partialId)} 
+                    style={{ cursor: 'pointer' }} 
+                  />
                 </div>
               )}
             </div>
           )
         })}
       </div>
-      <div style={{ marginTop: '20px', padding: '15px', borderTop: '1px solid #ccc' }}>
-        <Button type="button" text="Enviar Todos os Tempos" onClick={handleFinalSubmit} />
+      <div className={styles.submitSection}>
+        <Button 
+          type="button" 
+          text="Enviar Todos os Tempos" 
+          onClick={handleFinalSubmit}
+          size="large"
+        />
       </div>
     </li>
   )

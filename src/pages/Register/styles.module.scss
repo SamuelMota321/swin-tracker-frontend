@@ -1,0 +1,66 @@
+@use "../../styles/global.scss" as global;
+
+.container {
+    min-height: calc(100vh - 70px);
+    background: global.$color-background;
+    padding: global.$spacing-xl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    background: global.$color-white;
+    padding: global.$spacing-xxl;
+    border-radius: global.$border-radius-large;
+    box-shadow: global.$shadow-md;
+    max-width: 600px;
+    width: 100%;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    color: global.$color-primary;
+    text-decoration: none;
+    font-weight: global.$font-weight-medium;
+    margin-bottom: global.$spacing-xl;
+    transition: all 0.2s ease;
+
+    &:hover {
+        color: global.$color-primary-dark;
+        transform: translateX(-2px);
+    }
+
+    svg {
+        transition: transform 0.2s ease;
+    }
+
+    &:hover svg {
+        transform: translateX(-2px);
+    }
+}
+
+.title {
+    color: global.$color-text-primary;
+    margin-bottom: global.$spacing-lg;
+    text-align: center;
+}
+
+.subtitle {
+    color: global.$color-text-secondary;
+    text-align: center;
+    margin-bottom: global.$spacing-xl;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: global.$spacing-md;
+    }
+
+    .content {
+        padding: global.$spacing-lg;
+    }
+}

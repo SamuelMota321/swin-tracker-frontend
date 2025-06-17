@@ -1,0 +1,50 @@
+@use "../../styles/global.scss" as global;
+
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-sm;
+    margin-bottom: global.$spacing-md;
+
+    label {
+        font-weight: global.$font-weight-medium;
+        color: global.$color-text-primary;
+        font-size: 0.95rem;
+    }
+
+    select {
+        width: 100%;
+        padding: global.$spacing-md global.$spacing-lg;
+        border: 2px solid global.$color-border;
+        border-radius: global.$border-radius;
+        font-size: 1rem;
+        font-family: global.$font-stack;
+        background: global.$color-white;
+        transition: all 0.2s ease;
+        box-shadow: global.$shadow-sm;
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+            border-color: global.$color-primary;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+            transform: translateY(-1px);
+        }
+
+        &:hover {
+            border-color: global.$color-primary;
+        }
+
+        option {
+            padding: global.$spacing-sm;
+            font-family: global.$font-stack;
+        }
+    }
+
+    .error {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: global.$spacing-xs;
+        font-weight: global.$font-weight-normal;
+    }
+}

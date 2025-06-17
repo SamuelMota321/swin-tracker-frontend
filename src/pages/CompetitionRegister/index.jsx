@@ -10,6 +10,7 @@ import { Select } from "../../components/Select";
 
 import { competitionRegisterSchema } from "../../schemas/competitionRegisterSchema";
 import { ProofCard } from "./ProofCard";
+import styles from "./styles.module.scss";
 
 export const CompetitionRegister = () => {
     const { competitionRegister, getAthleteList, athleteList } = useContext(AppContext);
@@ -38,43 +39,64 @@ export const CompetitionRegister = () => {
     }, []);
 
     return (
-        <div>
-            <h2>Cadastro de Torneio</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Input label="Nome:" {...register("name")} error={errors.name} />
-                <Input label="Data:" type="date" {...register("date")} error={errors.date} />
+        <div className={styles.container}>
+            <div className={styles.content}>
+                <h2 className={styles.title}>Cadastro de Torneio</h2>
+                <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                    <div className={styles.basicInfo}>
+                        <Input 
+                            label="Nome:" 
+                            placeholder="Nome do torneio"
+                            {...register("name")} 
+                            error={errors.name} 
+                        />
+                        <Input 
+                            label="Data:" 
+                            type="date" 
+                            {...register("date")} 
+                            error={errors.date} 
+                        />
+                        <Select
+                            label="Tipo de piscina:"
+                            values={["Selecione um tipo de piscina", "25", "50"]}
+                            {...register("poolType")}
+                            error={errors.poolType}
+                        />
+                    </div>
 
-                <Select
-                    label="Tipo de piscina:"
-                    values={["Selecione um tipo de piscina", "25", "50"]}
-                    {...register("poolType")}
-                    error={errors.poolType}
-                />
+                    <div className={styles.proofsSection}>
+                        <h3 className={styles.sectionTitle}>Provas</h3>
+                        {proofs.fields.map((proofField, proofIndex) => (
+                            <ProofCard
+                                key={proofField.id}
+                                proofIndex={proofIndex}
+                                control={control}
+                                register={register}
+                                errors={errors}
+                                watch={watch}
+                                setValue={setValue}
+                                athleteList={athleteList}
+                                onRemoveProof={() => proofs.remove(proofIndex)}
+                            />
+                        ))}
 
-                <h3>Provas</h3>
-                {proofs.fields.map((proofField, proofIndex) => (
-                    <ProofCard
-                        key={proofField.id}
-                        proofIndex={proofIndex}
-                        control={control}
-                        register={register}
-                        errors={errors}
-                        watch={watch}
-                        setValue={setValue}
-                        athleteList={athleteList}
-                        onRemoveProof={() => proofs.remove(proofIndex)}
+                        <button
+                            type="button"
+                            className={styles.addProofButton}
+                            onClick={() => proofs.append({ distance: 0, styleType: "", series: [] })}
+                        >
+                            + Adicionar prova
+                        </button>
+                    </div>
+
+                    <Button 
+                        type="submit" 
+                        text="Criar Torneio" 
+                        className={styles.submitButton}
+                        size="large"
                     />
-                ))}
-
-                <button
-                    type="button"
-                    onClick={() => proofs.append({ distance: 0, styleType: "", series: [] })}
-                >
-                    Adicionar prova
-                </button>
-
-                <Button type="submit" text="Enviar" />
-            </form>
+                </form>
+            </div>
         </div>
     );
 };

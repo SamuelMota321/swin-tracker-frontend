@@ -4,19 +4,18 @@ import styles from "./styles.module.scss"
 
 export const Home = () => {
     return (
-        <>
-            <section className={styles.flex}>
-                <div className={styles.loginBox}>
+        <div className={styles.container}>
+            <div className={styles.content}>
+                <div className={styles.loginSection}>
                     <h1>Login</h1>
-                    <p>Apenas Técnicos</p>
+                    <p className={styles.subtitle}>Apenas técnicos</p>
                     <FormLogin />
-
                 </div>
-                <div>
-                    <h1>Procurar atleta</h1>
+                <div className={styles.searchSection}>
+                    <h1>Procurar Atleta</h1>
                     <SearchAthletes />
                 </div>
-            </section>
-        </>
+            </div>
+        </div>
     )
 }

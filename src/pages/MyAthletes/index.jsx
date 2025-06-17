@@ -2,15 +2,15 @@ import { useContext, useEffect } from "react"
 import { Input } from "../../components/Input"
 import { Select } from "../../components/Select"
 import { AppContext } from "../../providers/AppContext"
-import { useLocation } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "../../components/Button"
 import { myAthletesSchema } from "../../schemas/myAthletesSchema"
+import styles from "./styles.module.scss"
 
 export const MyAthletes = () => {
   const { getAthleteList, athleteList, registerAthlete, error } = useContext(AppContext)
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(myAthletesSchema)
   });
 
@@ -18,6 +18,7 @@ export const MyAthletes = () => {
     try {
       await registerAthlete(formData)
       await getAthleteList()
+      reset() // Clear form after successful submission
     } catch (err) {
       console.error("Erro ao registrar atleta:", err)
     }
@@ -28,19 +29,22 @@ export const MyAthletes = () => {
   }, [])
 
   return (
-    <>
-      <section>
-        <div>
-          <form onSubmit={handleSubmit(submit)}>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <div className={styles.formSection}>
+          <h2>Registrar Atleta</h2>
+          <form onSubmit={handleSubmit(submit)} className={styles.form}>
+            {error && <div className={styles.errorMessage}>{error}</div>}
+            
             <Input
-              label={"Nome do Atleta"}
+              label="Nome do Atleta"
+              placeholder="Digite o nome completo"
               {...register("name")}
               error={errors.name}
             />
-            {error ? <p>{error}</p> : <></>}
 
             <Select
-              label={"Categoria"}
+              label="Categoria"
               values={[
                 "Selecione uma categoria",
                 "Mirim",
@@ -54,16 +58,28 @@ export const MyAthletes = () => {
               error={errors.category}
             />
 
-            <Button type={"submit"} text={"Registrar"} />
+            <Button 
+              type="submit" 
+              text="Registrar" 
+              className={styles.submitButton}
+              size="large"
+            />
           </form>
         </div>
 
-        <div>
-          {athleteList ? athleteList.map((athlete) => (
-            <p key={athlete.id}> {athlete.name}</p>
-          )) : <p>Nenhum atleta encontrado</p>}
+        <div className={styles.athletesList}>
+          <h2>Meus Atletas</h2>
+          {athleteList && athleteList.length > 0 ? (
+            athleteList.map((athlete) => (
+              <div key={athlete.id} className={styles.athleteItem}>
+                <p>{athlete.name}</p>
+              </div>
+            ))
+          ) : (
+            <p className={styles.noAthletes}>Nenhum atleta encontrado</p>
+          )}
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   )
 }

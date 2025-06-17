@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Controller } from "react-hook-form";
+import styles from "./styles.module.scss";
 
 export const SeriesCard = ({ proofIndex, setValue, athleteList, control, seriesIndex, errors, onSeriesRemove }) => {
   const selectedPath = `proofs.${proofIndex}.series.${seriesIndex}.athletes`;
@@ -10,8 +11,18 @@ export const SeriesCard = ({ proofIndex, setValue, athleteList, control, seriesI
   }, [seriesIndex, seriesIndexPath, setValue]);
 
   return (
-    <div key={`proofs.${proofIndex}.series.${seriesIndex}`}>
-      <label>Atletas da Série {seriesIndex + 1}:</label>
+    <div className={styles.seriesCard}>
+      <div className={styles.seriesHeader}>
+        <label>Atletas da Série {seriesIndex + 1}:</label>
+        <button 
+          type="button" 
+          onClick={() => onSeriesRemove(seriesIndex)}
+          className={styles.removeButton}
+        >
+          Remover série
+        </button>
+      </div>
+
       <Controller
         control={control}
         name={selectedPath}
@@ -25,9 +36,9 @@ export const SeriesCard = ({ proofIndex, setValue, athleteList, control, seriesI
           };
 
           return (
-            <div>
+            <div className={styles.athletesList}>
               {athleteList.map((athlete) => (
-                <div key={athlete.id}>
+                <div key={athlete.id} className={styles.athleteItem}>
                   <input
                     type="checkbox"
                     id={`proof-${proofIndex}-series-${seriesIndex}-athlete-${athlete.id}`}
@@ -45,14 +56,10 @@ export const SeriesCard = ({ proofIndex, setValue, athleteList, control, seriesI
       />
 
       {errors?.proofs?.[proofIndex]?.series?.[seriesIndex]?.athletes && (
-        <p>
+        <p className={styles.error}>
           {errors.proofs[proofIndex].series[seriesIndex].athletes.message}
         </p>
       )}
-
-      <button type="button" onClick={() => onSeriesRemove(seriesIndex)}>
-        Remover série
-      </button>
     </div>
   );
 }

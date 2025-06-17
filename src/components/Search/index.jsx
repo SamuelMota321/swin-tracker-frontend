@@ -3,6 +3,7 @@ import { Input } from "../Input"
 import { AthleteCard } from "./AthetesCard"
 import { AppContext } from "../../providers/AppContext"
 import { CompetitionCard } from "./CompetitionCard"
+import styles from "./styles.module.scss"
 
 export const SearchAthletes = () => {
   const { searchAthletes, searchList } = useContext(AppContext)
@@ -13,40 +14,44 @@ export const SearchAthletes = () => {
   }
 
   return (
-    <div>
+    <div className={styles.searchContainer}>
       <Input
         type="text"
         search="true"
+        placeholder="Digite o nome do atleta..."
         onChange={(e) => {
           setSearchInputContent(e.target.value)
           submit(searchInputContent)
         }}
       />
 
-      {searchInputContent ?
-        <p >Resultados de busca para:
-          <span>{searchInputContent}</span>
-        </p> : null}
+      {searchInputContent && (
+        <div className={styles.searchResults}>
+          <p className={styles.searchQuery}>
+            Resultados de busca para:
+            <span>{searchInputContent}</span>
+          </p>
 
-      {searchInputContent == "" ? null :
-        searchList ?
-          <ul>
-            {searchList.map((data, i) => {
-              return (
-                <AthleteCard key={i}
+          {searchList ? (
+            <ul className={styles.resultsList}>
+              {searchList.map((data, i) => (
+                <AthleteCard 
+                  key={i}
                   name={data.athleteName}
                   competition={data.competitionName}
                   proof={data.proof}
-                  partials={data.partials} />
-              )
-            })}
-          </ul>
-          :
-          <div>
-            <h1 >Desculpe! :(</h1>
-            <p>Nenhum resultado encontrado</p>
-          </div>
-      }
+                  partials={data.partials} 
+                />
+              ))}
+            </ul>
+          ) : (
+            <div className={styles.noResults}>
+              <h1>Desculpe! :(</h1>
+              <p>Nenhum resultado encontrado</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -60,44 +65,46 @@ export const SearchCompetition = () => {
   }
 
   return (
-    <>
+    <div className={styles.searchContainer}>
       <Input
         type="text"
         search="true"
+        placeholder="Digite o nome da competição..."
         onChange={(e) => {
           setSearchInputContent(e.target.value)
           submit(searchInputContent)
         }}
       />
 
-      {searchInputContent ?
-        <p >Resultados de busca para:
-          <span>{searchInputContent}</span>
-        </p> : null}
+      {searchInputContent && (
+        <div className={styles.searchResults}>
+          <p className={styles.searchQuery}>
+            Resultados de busca para:
+            <span>{searchInputContent}</span>
+          </p>
 
-      {searchInputContent == "" ? null :
-        searchList ?
-          <ul>
-            {
-              searchList.map((data, i) => {
+          {searchList ? (
+            <ul className={styles.resultsList}>
+              {searchList.map((data, i) => {
                 const proofsNames = Object.keys(data.proofs)
-                return proofsNames.map((proofName, i) => {
-                  return (
-                    <CompetitionCard key={i}
-                      competitionName={data.competitionName}
-                      proofName={proofName}
-                      data={data.proofs[proofName]} 
-                    />
-                  )
-                })
+                return proofsNames.map((proofName, j) => (
+                  <CompetitionCard 
+                    key={`${i}-${j}`}
+                    competitionName={data.competitionName}
+                    proofName={proofName}
+                    data={data.proofs[proofName]} 
+                  />
+                ))
               })}
-          </ul>
-          :
-          <div>
-            <h1 >Desculpe! :(</h1>
-            <p>Nenhum resultado encontrado</p>
-          </div>
-      }
-    </>
+            </ul>
+          ) : (
+            <div className={styles.noResults}>
+              <h1>Desculpe! :(</h1>
+              <p>Nenhum resultado encontrado</p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   )
 }

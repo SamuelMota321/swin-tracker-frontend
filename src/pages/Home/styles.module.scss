@@ -1,12 +1,147 @@
-.flex {
+@use "../../styles/global.scss" as global;
+
+.container {
+    min-height: calc(100vh - 70px);
+    background: linear-gradient(135deg, global.$color-secondary 0%, global.$color-background 100%);
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 90vh;
-    gap : 50px
-     
-    div {
-        display: flex;
+    justify-content: center;
+    padding: global.$spacing-xl;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: global.$spacing-xxl * 2;
+    max-width: 1200px;
+    width: 100%;
+    align-items: start;
+}
+
+.loginSection {
+    background: global.$color-white;
+    border-radius: global.$border-radius-large;
+    padding: global.$spacing-xxl;
+    box-shadow: global.$shadow-lg;
+    
+    h1 {
+        font-size: 2.5rem;
+        font-weight: global.$font-weight-bold;
+        color: global.$color-text-primary;
+        margin-bottom: global.$spacing-sm;
+        text-align: center;
+    }
+    
+    .subtitle {
+        color: global.$color-text-secondary;
+        text-align: center;
+        margin-bottom: global.$spacing-xl;
+        font-size: 1.1rem;
+    }
+    
+    .registerLink {
+        text-align: center;
+        margin-top: global.$spacing-lg;
+        color: global.$color-text-secondary;
+        
+        a {
+            color: global.$color-primary;
+            text-decoration: none;
+            font-weight: global.$font-weight-medium;
+            margin-left: global.$spacing-xs;
+            
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 }
 
+.searchSection {
+    background: global.$color-white;
+    border-radius: global.$border-radius-large;
+    padding: global.$spacing-xxl;
+    box-shadow: global.$shadow-lg;
+    
+    h1 {
+        font-size: 2.5rem;
+        font-weight: global.$font-weight-bold;
+        color: global.$color-text-primary;
+        margin-bottom: global.$spacing-xl;
+        text-align: center;
+    }
+}
+
+.searchResults {
+    margin-top: global.$spacing-lg;
+    
+    .searchQuery {
+        color: global.$color-text-secondary;
+        margin-bottom: global.$spacing-md;
+        
+        span {
+            font-weight: global.$font-weight-medium;
+            color: global.$color-primary;
+        }
+    }
+    
+    .noResults {
+        text-align: center;
+        padding: global.$spacing-xl;
+        
+        h2 {
+            color: global.$color-text-secondary;
+            margin-bottom: global.$spacing-sm;
+        }
+        
+        p {
+            color: global.$color-text-secondary;
+        }
+    }
+}
+
+.athleteList {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+    
+    .athleteCard {
+        background: global.$color-gray-light;
+        border-radius: global.$border-radius;
+        padding: global.$spacing-md;
+        border: 1px solid global.$color-border;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: global.$shadow-md;
+        }
+        
+        p {
+            margin: 0;
+            font-weight: global.$font-weight-medium;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .content {
+        grid-template-columns: 1fr;
+        gap: global.$spacing-xl;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: global.$spacing-md;
+    }
+    
+    .loginSection,
+    .searchSection {
+        padding: global.$spacing-lg;
+        
+        h1 {
+            font-size: 2rem;
+        }
+    }
+}

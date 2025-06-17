@@ -1,9 +1,12 @@
+import styles from "./styles.module.scss"
+
 export const MyAccount = () => {
     return (
-        <>
-            <section>
-                <h1>Minha conta</h1>
-            </section>
-        </>
+        <div className={styles.container}>
+            <div className={styles.content}>
+                <h1>Minha Conta</h1>
+                <p>Funcionalidade em desenvolvimento...</p>
+            </div>
+        </div>
     )
 }
