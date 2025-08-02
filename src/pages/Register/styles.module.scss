@@ -1,8 +1,8 @@
 @use "../../styles/global.scss" as global;
 
 .container {
-    min-height: calc(100vh - 70px);
-    background: global.$color-background;
+    min-height: calc(100vh - 60px);
+    background: linear-gradient(135deg, #E3F2FD 0%, #F0F4F8 100%);
     padding: global.$spacing-xl;
     display: flex;
     align-items: center;
@@ -13,8 +13,8 @@
     background: global.$color-white;
     padding: global.$spacing-xxl;
     border-radius: global.$border-radius-large;
-    box-shadow: global.$shadow-md;
-    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
     width: 100%;
 }
 
@@ -46,6 +46,7 @@
     color: global.$color-text-primary;
     margin-bottom: global.$spacing-lg;
     text-align: center;
+    font-size: 2.5rem;
 }
 
 .subtitle {
@@ -55,6 +56,16 @@
     font-size: 1.1rem;
 }
 
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+}
+
+.submitButton {
+    margin-top: global.$spacing-lg;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: global.$spacing-md;
@@ -62,5 +73,9 @@
 
     .content {
         padding: global.$spacing-lg;
+    }
+    
+    .title {
+        font-size: 2rem;
     }
 }

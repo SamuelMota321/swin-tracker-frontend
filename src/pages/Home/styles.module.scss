@@ -1,8 +1,8 @@
 @use "../../styles/global.scss" as global;
 
 .container {
-    min-height: calc(100vh - 70px);
-    background: linear-gradient(135deg, global.$color-secondary 0%, global.$color-background 100%);
+    min-height: calc(100vh - 60px);
+    background: linear-gradient(135deg, #E3F2FD 0%, #F0F4F8 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,37 +12,42 @@
 .content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: global.$spacing-xxl * 2;
-    max-width: 1200px;
+    gap: 0;
+    max-width: 1000px;
     width: 100%;
-    align-items: start;
+    min-height: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-radius: global.$border-radius-large;
+    overflow: hidden;
 }
 
 .loginSection {
-    background: global.$color-white;
-    border-radius: global.$border-radius-large;
+    background: linear-gradient(135deg, #BBDEFB 0%, #E3F2FD 100%);
     padding: global.$spacing-xxl;
-    box-shadow: global.$shadow-lg;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     
     h1 {
         font-size: 2.5rem;
         font-weight: global.$font-weight-bold;
         color: global.$color-text-primary;
         margin-bottom: global.$spacing-sm;
-        text-align: center;
+        text-align: left;
     }
     
     .subtitle {
         color: global.$color-text-secondary;
-        text-align: center;
         margin-bottom: global.$spacing-xl;
-        font-size: 1.1rem;
+        font-size: 1rem;
+        text-align: left;
     }
     
     .registerLink {
         text-align: center;
         margin-top: global.$spacing-lg;
         color: global.$color-text-secondary;
+        font-size: 0.9rem;
         
         a {
             color: global.$color-primary;
@@ -59,16 +64,17 @@
 
 .searchSection {
     background: global.$color-white;
-    border-radius: global.$border-radius-large;
     padding: global.$spacing-xxl;
-    box-shadow: global.$shadow-lg;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     
     h1 {
         font-size: 2.5rem;
         font-weight: global.$font-weight-bold;
         color: global.$color-text-primary;
         margin-bottom: global.$spacing-xl;
-        text-align: center;
+        text-align: left;
     }
 }
 
@@ -78,6 +84,7 @@
     .searchQuery {
         color: global.$color-text-secondary;
         margin-bottom: global.$spacing-md;
+        font-size: 0.9rem;
         
         span {
             font-weight: global.$font-weight-medium;
@@ -103,11 +110,11 @@
 .athleteList {
     display: flex;
     flex-direction: column;
-    gap: global.$spacing-md;
+    gap: global.$spacing-sm;
     
     .athleteCard {
         background: global.$color-gray-light;
-        border-radius: global.$border-radius;
+        border-radius: global.$border-radius-small;
         padding: global.$spacing-md;
         border: 1px solid global.$color-border;
         transition: all 0.2s ease;
@@ -124,10 +131,95 @@
     }
 }
 
+// Estilos para os cards de resultado de busca
+.resultCards {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+    margin-top: global.$spacing-lg;
+}
+
+.athleteResultCard {
+    background: global.$color-white;
+    border-radius: global.$border-radius;
+    padding: global.$spacing-lg;
+    box-shadow: global.$shadow-sm;
+    border: 1px solid global.$color-border;
+    
+    .athleteHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: global.$spacing-md;
+        
+        h3 {
+            margin: 0;
+            color: global.$color-text-primary;
+            font-size: 1.1rem;
+        }
+        
+        .competitionInfo {
+            font-size: 0.9rem;
+            color: global.$color-text-secondary;
+        }
+    }
+    
+    .timeCards {
+        display: flex;
+        gap: global.$spacing-sm;
+        flex-wrap: wrap;
+    }
+    
+    .timeCard {
+        border-radius: global.$border-radius-small;
+        padding: global.$spacing-sm global.$spacing-md;
+        color: white;
+        font-weight: global.$font-weight-medium;
+        min-width: 80px;
+        text-align: center;
+        
+        .distance {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
+        .time {
+            font-size: 1rem;
+            font-weight: global.$font-weight-bold;
+        }
+        
+        .split {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+        
+        &.card50 {
+            background: global.$color-card-50;
+        }
+        
+        &.card100 {
+            background: global.$color-card-100;
+        }
+        
+        &.card150 {
+            background: global.$color-card-150;
+        }
+        
+        &.card200 {
+            background: global.$color-card-200;
+        }
+    }
+}
+
 @media (max-width: 1024px) {
     .content {
         grid-template-columns: 1fr;
-        gap: global.$spacing-xl;
+        max-width: 500px;
+    }
+    
+    .loginSection,
+    .searchSection {
+        padding: global.$spacing-xl;
     }
 }
 
@@ -143,5 +235,9 @@
         h1 {
             font-size: 2rem;
         }
+    }
+    
+    .timeCards {
+        justify-content: center;
     }
 }

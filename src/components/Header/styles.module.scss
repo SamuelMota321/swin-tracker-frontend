@@ -5,20 +5,52 @@
     top: 0;
     background: linear-gradient(135deg, global.$color-primary 0%, global.$color-primary-dark 100%);
     width: 100%;
-    height: 70px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 global.$spacing-lg;
-    box-shadow: global.$shadow-md;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
     z-index: 1000;
 
-    img {
-        width: 48px;
-        height: 48px;
-        border-radius: global.$border-radius-small;
+    .logo {
+        width: 40px;
+        height: 40px;
         background: global.$color-white;
-        padding: global.$spacing-sm;
+        border-radius: global.$border-radius-small;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &::before {
+            content: "🏊";
+            font-size: 20px;
+        }
+    }
+
+    .searchHeader {
+        flex: 1;
+        max-width: 400px;
+        margin: 0 global.$spacing-lg;
+        
+        input {
+            width: 100%;
+            padding: global.$spacing-sm global.$spacing-md;
+            border: none;
+            border-radius: global.$border-radius;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.9);
+            
+            &::placeholder {
+                color: global.$color-text-secondary;
+            }
+            
+            &:focus {
+                outline: none;
+                background: global.$color-white;
+                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+            }
+        }
     }
 
     nav ul {
@@ -35,6 +67,7 @@
             padding: global.$spacing-sm global.$spacing-md;
             border-radius: global.$border-radius-small;
             transition: all 0.2s ease;
+            font-size: 0.9rem;
 
             &:hover {
                 background: rgba(255, 255, 255, 0.1);
@@ -53,11 +86,16 @@
     .header {
         padding: 0 global.$spacing-md;
         
+        .searchHeader {
+            max-width: 200px;
+            margin: 0 global.$spacing-sm;
+        }
+        
         nav ul {
-            gap: global.$spacing-md;
+            gap: global.$spacing-sm;
             
             li {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
                 padding: global.$spacing-xs global.$spacing-sm;
             }
         }

@@ -52,9 +52,86 @@
     background: global.$color-white;
     border: 1px solid global.$color-border;
     border-radius: global.$border-radius;
-    padding: global.$spacing-md;
+    padding: global.$spacing-lg;
     transition: all 0.2s ease;
     box-shadow: global.$shadow-sm;
+    
+    .athleteHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: global.$spacing-md;
+        
+        h3 {
+            margin: 0;
+            color: global.$color-text-primary;
+            font-size: 1.2rem;
+        }
+        
+        .competitionInfo {
+            font-size: 0.9rem;
+            color: global.$color-text-secondary;
+            text-align: right;
+            
+            .competition {
+                font-weight: global.$font-weight-medium;
+            }
+            
+            .event {
+                font-size: 0.8rem;
+                margin-top: 2px;
+            }
+        }
+    }
+    
+    .timeCards {
+        display: flex;
+        gap: global.$spacing-sm;
+        flex-wrap: wrap;
+    }
+    
+    .timeCard {
+        border-radius: global.$border-radius-small;
+        padding: global.$spacing-sm global.$spacing-md;
+        color: white;
+        font-weight: global.$font-weight-medium;
+        min-width: 70px;
+        text-align: center;
+        font-size: 0.9rem;
+        
+        .distance {
+            font-size: 0.8rem;
+            font-weight: global.$font-weight-bold;
+            margin-bottom: 2px;
+        }
+        
+        .time {
+            font-size: 1rem;
+            font-weight: global.$font-weight-bold;
+            margin-bottom: 2px;
+        }
+        
+        .split {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+        
+        &.card50 {
+            background: #2196F3;
+        }
+        
+        &.card100 {
+            background: #1976D2;
+        }
+        
+        &.card150 {
+            background: #FF9800;
+        }
+        
+        &.card200 {
+            background: #2196F3;
+        }
+    }
     
     &:hover {
         transform: translateY(-2px);

@@ -1,5 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa"
 import { Link } from "react-router-dom"
+import { FormRegister } from "../../components/FormRegister"
 import styles from "./styles.module.scss"
 
 export const Register = () => {
@@ -9,8 +10,7 @@ export const Register = () => {
                 <Link to="/" className={styles.backLink}>
                     <FaArrowLeft /> Voltar
                 </Link>
-                <h1 className={styles.title}>Registro</h1>
-                <p className={styles.subtitle}>Funcionalidade em desenvolvimento...</p>
+                <FormRegister />
             </div>
         </div>
      )
