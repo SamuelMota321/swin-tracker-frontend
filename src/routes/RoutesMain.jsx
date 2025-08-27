@@ -8,6 +8,8 @@ import { ProtectedRoutes } from "./ProtectedRoutes"
 import { CompetitionRegister } from "../pages/CompetitionRegister"
 import { useContext } from "react"
 import { AppContext } from "../providers/AppContext"
+import { AdminRoutes } from "./AdminRoutes" // Importe a nova rota
+import { RegisterCoach } from "../pages/RegisterCoach" // Importe a nova página
 
 export const RoutesMain = () => {
     const { user } = useContext(AppContext)
@@ -15,17 +17,18 @@ export const RoutesMain = () => {
         <Routes>
             <Route path="/" element={user ?<Competition/> : <Home />} />
             <Route path="/registrar" element={<Register />} />
-            <Route path="/competicoes" element={<ProtectedRoutes />} >
-                <Route index element={<Competition />} />
+            
+            {/* Rotas para usuários logados */}
+            <Route element={<ProtectedRoutes />}>
+                <Route path="/competicoes" element={<Competition />} />
+                <Route path="/registrar-competicao" element={<CompetitionRegister />} />
+                <Route path="/meus-atletas" element={<MyAthletes />} />
+                <Route path="/minha-conta" element={<MyAccount />} />
             </Route>
-            <Route path="/registrar-competicao" element={<ProtectedRoutes />} >
-                <Route index element={<CompetitionRegister />} />
-            </Route>
-            <Route path="/meus-atletas" element={<ProtectedRoutes />}>
-                <Route index element={<MyAthletes />} />
-            </Route>
-            <Route path="/minha-conta" element={<ProtectedRoutes />} >
-                <Route index element={<MyAccount />} />
+
+            {/* Rota exclusiva para ADMIN */}
+            <Route element={<AdminRoutes />}>
+                <Route path="/registrar-tecnico" element={<RegisterCoach />} />
             </Route>
         </Routes>
     )

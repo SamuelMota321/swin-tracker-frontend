@@ -1,97 +1,65 @@
 @use "../../styles/global.scss" as global;
 
 .container {
-    min-height: calc(100vh - 80px);
-    background: global.$color-background;
-    padding: global.$spacing-lg;
+    padding: global.$spacing-xl;
+    max-width: 900px;
+    margin: auto;
 }
 
 .content {
-    max-width: 1200px;
-    margin: 0 auto;
-    background: global.$color-white;
-    border-radius: global.$border-radius;
+    background: global.$color-card-background;
     padding: global.$spacing-xl;
+    border-radius: global.$border-radius;
     box-shadow: global.$shadow-lg;
 }
 
 .title {
-    color: global.$color-text-primary;
-    margin-bottom: global.$spacing-xl;
     text-align: center;
-    font-size: 2.5rem;
-    font-weight: global.$font-weight-bold;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: global.$spacing-lg;
+    margin-bottom: global.$spacing-xl;
 }
 
 .basicInfo {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: global.$spacing-md;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: global.$spacing-lg;
+    margin-bottom: global.$spacing-xl;
+    background-color: global.$color-background;
     padding: global.$spacing-lg;
-    background: global.$color-gray-light;
-    border-radius: global.$border-radius-small;
-    border: 1px solid global.$color-border;
+    border-radius: global.$border-radius;
 }
 
 .proofsSection {
-    .sectionTitle {
-        color: global.$color-text-primary;
-        margin-bottom: global.$spacing-lg;
-        font-size: 1.5rem;
-        font-weight: global.$font-weight-bold;
-        text-align: center;
-    }
+    margin-top: global.$spacing-xl;
+}
 
-    .addProofButton {
-        width: 100%;
-        background: global.$color-white;
-        color: global.$color-primary;
-        border: 2px dashed global.$color-primary;
-        border-radius: global.$border-radius-small;
-        padding: global.$spacing-lg;
-        font-size: 1.1rem;
-        font-weight: global.$font-weight-medium;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        margin-top: global.$spacing-lg;
+.sectionTitle {
+    text-align: center;
+    margin-bottom: global.$spacing-lg;
+}
 
-        &:hover {
-            background: global.$color-primary;
-            color: global.$color-white;
-            border-style: solid;
-            transform: translateY(-2px);
-            box-shadow: global.$shadow-md;
-        }
+.addProofButton {
+    width: 100%;
+    padding: global.$spacing-md;
+    border: 2px dashed global.$color-primary-light;
+    background: transparent;
+    color: global.$color-primary-light;
+    border-radius: global.$border-radius;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: global.$font-weight-bold;
+    margin-top: global.$spacing-md;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        background: global.$color-primary;
+        color: global.$color-white;
+        border-style: solid;
     }
 }
 
 .submitButton {
-    margin-top: global.$spacing-xl;
-    align-self: center;
-    min-width: 200px;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: global.$spacing-md;
-    }
-
-    .content {
-        padding: global.$spacing-lg;
-    }
-
-    .title {
-        font-size: 2rem;
-    }
-
-    .basicInfo {
-        grid-template-columns: 1fr;
-        padding: global.$spacing-md;
-    }
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: global.$spacing-xl auto 0;
 }

@@ -2,7 +2,6 @@
 
 .container {
     min-height: 100vh;
-    background: global.$color-background;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,45 +9,25 @@
 }
 
 .content {
-    background: global.$color-white;
+    background: global.$color-card-background;
     border-radius: global.$border-radius;
     padding: global.$spacing-xl;
     box-shadow: global.$shadow-lg;
     width: 100%;
     max-width: 500px;
-    position: relative;
 }
 
 .backLink {
     display: inline-flex;
     align-items: center;
     gap: global.$spacing-sm;
-    color: global.$color-primary;
+    color: global.$color-primary-light;
     text-decoration: none;
     font-weight: global.$font-weight-medium;
     margin-bottom: global.$spacing-lg;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
 
     &:hover {
-        color: global.$color-primary-dark;
-        transform: translateX(-2px);
-    }
-
-    svg {
-        transition: transform 0.2s ease;
-    }
-
-    &:hover svg {
-        transform: translateX(-2px);
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: global.$spacing-md;
-    }
-
-    .content {
-        padding: global.$spacing-lg;
+        color: global.$color-white;
     }
 }

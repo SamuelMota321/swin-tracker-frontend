@@ -6,8 +6,6 @@
 
 .title {
     color: global.$color-text-primary;
-    font-size: 2rem;
-    font-weight: global.$font-weight-bold;
     text-align: center;
     margin-bottom: global.$spacing-xl;
 }
@@ -20,26 +18,4 @@
 
 .submitButton {
     margin-top: global.$spacing-md;
-    width: 100%;
-}
-
-.errorMessage {
-    background: #f8d7da;
-    color: #721c24;
-    padding: global.$spacing-sm global.$spacing-md;
-    border-radius: global.$border-radius-small;
-    border: 1px solid #f5c6cb;
-    margin-bottom: global.$spacing-md;
-    font-size: 0.9rem;
-    text-align: center;
-}
-
-@media (max-width: 768px) {
-    .title {
-        font-size: 1.5rem;
-    }
-
-    .form {
-        gap: global.$spacing-md;
-    }
 }

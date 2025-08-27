@@ -1,28 +1,32 @@
 @use "../../styles/global.scss" as global;
 
 .selectContainer {
-    margin-bottom: global.$spacing-md;
+    width: 100%;
 
     label {
         display: block;
         margin-bottom: global.$spacing-sm;
         font-weight: global.$font-weight-medium;
         color: global.$color-text-primary;
-        font-size: 1rem;
     }
 
     select {
         width: 100%;
         padding: global.$spacing-sm global.$spacing-md;
         border: 2px solid global.$color-border;
-        border-radius: global.$border-radius-small;
+        border-radius: global.$border-radius;
         font-size: 1rem;
         font-family: global.$font-stack;
-        background: global.$color-white;
+        background: global.$color-card-background;
         color: global.$color-text-primary;
         cursor: pointer;
         transition: all 0.2s ease;
-        box-shadow: global.$shadow-sm;
+        appearance: none; // Remove a seta padrão
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A0AEC0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1em;
+        padding-right: 2.5rem; // Espaço para a nova seta
 
         &:hover {
             border-color: global.$color-primary-light;
@@ -31,29 +35,18 @@
         &:focus {
             outline: none;
             border-color: global.$color-primary;
-            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
         }
 
         option {
-            padding: global.$spacing-sm;
-            background: global.$color-white;
+            background: global.$color-background;
             color: global.$color-text-primary;
         }
     }
 
     .error {
-        color: #dc3545;
-        font-size: 0.85rem;
+        color: #E53E3E;
+        font-size: 0.875rem;
         margin-top: global.$spacing-xs;
-        display: block;
-    }
-}
-
-@media (max-width: 768px) {
-    .selectContainer {
-        select {
-            font-size: 0.9rem;
-            padding: global.$spacing-xs global.$spacing-sm;
-        }
     }
 }

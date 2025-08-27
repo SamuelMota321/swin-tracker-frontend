@@ -1,0 +1,30 @@
+@use "../../styles/global.scss" as global;
+
+.container {
+    padding: global.$spacing-xl;
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px); // Ajusta para centralizar verticalmente
+}
+
+.content {
+    background: global.$color-card-background;
+    padding: global.$spacing-xxl;
+    border-radius: global.$border-radius;
+    box-shadow: global.$shadow-lg;
+    text-align: center;
+    width: 100%;
+
+    h1 {
+        margin-bottom: global.$spacing-md;
+        color: global.$color-text-primary;
+    }
+
+    p {
+        font-size: 1.2rem;
+        color: global.$color-text-secondary;
+    }
+}

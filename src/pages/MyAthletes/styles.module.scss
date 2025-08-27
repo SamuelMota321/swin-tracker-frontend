@@ -1,0 +1,63 @@
+@use "../../styles/global.scss" as global;
+
+.container {
+    padding: global.$spacing-xl;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: global.$spacing-xl;
+    align-items: start;
+}
+
+.formSection, .athletesList {
+    background: global.$color-card-background;
+    padding: global.$spacing-xl;
+    border-radius: global.$border-radius;
+    box-shadow: global.$shadow-lg;
+    
+    h2 { 
+        margin-bottom: global.$spacing-lg;
+        padding-bottom: global.$spacing-md;
+        border-bottom: 1px solid global.$color-border;
+    }
+}
+
+.athleteItem {
+    padding: global.$spacing-sm global.$spacing-md;
+    background: global.$color-background;
+    border-radius: global.$border-radius-small;
+    margin-bottom: global.$spacing-sm;
+    color: global.$color-text-primary;
+    font-weight: global.$font-weight-medium;
+    border-left: 4px solid global.$color-primary;
+}
+
+.noAthletes {
+    color: global.$color-text-secondary;
+    text-align: center;
+    padding: global.$spacing-lg 0;
+}
+
+.errorMessage {
+    background-color: #e53e3e3b;
+    color: #FED7D7;
+    padding: global.$spacing-sm global.$spacing-md;
+    border-radius: global.$border-radius-small;
+    margin-bottom: global.$spacing-lg;
+    text-align: center;
+}
+
+// CORREÇÃO AQUI
+.submitButton {
+    margin-top: global.$spacing-lg; // Adiciona um espaço acima do botão
+}
+
+@media (max-width: 768px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+}

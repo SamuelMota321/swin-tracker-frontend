@@ -1,85 +1,51 @@
 @use "../../../styles/global.scss" as global;
 
 .proofCard {
-    background: global.$color-gray-light;
+    background: global.$color-background; // CORREÇÃO AQUI
     border: 1px solid global.$color-border;
     border-radius: global.$border-radius;
     padding: global.$spacing-lg;
-    margin-bottom: global.$spacing-md;
-
-    .proofHeader {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: global.$spacing-md;
-
-        h4 {
-            color: global.$color-text-primary;
-            margin: 0;
-            font-size: 1.2rem;
-        }
-
-        .removeButton {
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: global.$border-radius-small;
-            padding: global.$spacing-xs global.$spacing-sm;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-
-            &:hover {
-                background: #c82333;
-                transform: translateY(-1px);
-            }
-        }
-    }
-
-    .proofInputs {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: global.$spacing-md;
-        margin-bottom: global.$spacing-lg;
-    }
-
-    .seriesSection {
-        .sectionTitle {
-            color: global.$color-text-primary;
-            margin-bottom: global.$spacing-md;
-            font-size: 1.1rem;
-        }
-
-        .addSeriesButton {
-            background: global.$color-white;
-            color: global.$color-primary;
-            border: 2px dashed global.$color-primary;
-            border-radius: global.$border-radius-small;
-            padding: global.$spacing-sm global.$spacing-md;
-            font-weight: global.$font-weight-medium;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: global.$spacing-md;
-
-            &:hover {
-                background: global.$color-primary;
-                color: global.$color-white;
-                border-style: solid;
-            }
-        }
-    }
+    margin-bottom: global.$spacing-lg;
 }
 
-@media (max-width: 768px) {
-    .proofCard {
-        .proofInputs {
-            grid-template-columns: 1fr;
-        }
+.proofHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: global.$spacing-md;
+    h4 { font-size: 1.3rem; }
+}
 
-        .proofHeader {
-            flex-direction: column;
-            gap: global.$spacing-sm;
-            text-align: center;
-        }
+.removeButton {
+    background-color: #E53E3E;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    &:hover { background-color: #C53030; }
+}
+
+.proofInputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: global.$spacing-md;
+    margin-bottom: global.$spacing-lg;
+}
+
+.addSeriesButton {
+    width: 100%;
+    padding: global.$spacing-sm;
+    border: 2px dashed global.$color-primary-light;
+    background: transparent;
+    color: global.$color-primary-light;
+    cursor: pointer;
+    margin-top: global.$spacing-md;
+    border-radius: global.$border-radius-small;
+    font-weight: global.$font-weight-bold;
+
+    &:hover {
+        background: global.$color-primary;
+        color: global.$color-white;
     }
 }

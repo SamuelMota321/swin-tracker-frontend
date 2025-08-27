@@ -1,13 +1,14 @@
-@use "sass:color";
 @use "../../styles/global.scss" as global;
 
 .searchContainer {
     width: 100%;
     position: relative;
 }
+
 .searchResults {
     margin-top: global.$spacing-lg;
 }
+
 .searchQuery {
     text-align: center;
     color: global.$color-text-secondary;
@@ -18,50 +19,62 @@
         font-weight: global.$font-weight-bold;
     }
 }
+
 .resultsList {
     display: flex;
     flex-direction: column;
     gap: global.$spacing-lg;
 }
+
 .noResults {
     text-align: center;
     padding: global.$spacing-xxl 0;
     color: global.$color-text-secondary;
-    h1 { margin-bottom: global.$spacing-md; }
+
+    h1 {
+        margin-bottom: global.$spacing-md;
+    }
 }
 
-// NOVOS ESTILOS PARA O ATHLETECARD
+// Estilos do AthleteCard (RESULTADO DA BUSCA DE ATLETA)
 .athleteCard {
     background: global.$color-card-background;
     border-radius: global.$border-radius;
     padding: global.$spacing-lg;
-    box-shadow: global.$shadow-lg;
+    box-shadow: global.$shadow-md;
     border-left: 4px solid global.$color-primary;
 }
 
 .athleteHeader {
     margin-bottom: global.$spacing-lg;
+    padding-bottom: global.$spacing-md;
+    border-bottom: 1px solid global.$color-border;
     
     h3 {
         color: global.$color-text-primary;
-        font-size: 1.75rem;
-        margin: 0;
+        font-size: 1.5rem;
     }
 }
 
-.tags {
+.competitionInfo {
     display: flex;
-    gap: global.$spacing-sm;
+    gap: global.$spacing-md;
     margin-top: global.$spacing-sm;
 
-    .tag {
-        background-color: global.$color-primary-dark;
-        color: global.$color-white;
+    .competition, .event {
         padding: global.$spacing-xs global.$spacing-sm;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: global.$font-weight-bold;
-        text-transform: uppercase;
+        border-radius: global.$border-radius-small;
+        font-size: 0.9rem;
+    }
+
+    .competition {
+        background: global.$color-primary-dark;
+        color: global.$color-white;
+    }
+
+    .event {
+        background: global.$color-card-header;
+        color: global.$color-text-secondary;
     }
 }
 
@@ -76,33 +89,29 @@
     border-radius: global.$border-radius-small;
     text-align: center;
     color: global.$color-white;
-    background: global.$color-background;
+    font-weight: global.$font-weight-bold;
+    background: linear-gradient(145deg, global.$color-card-header, global.$color-background);
 
     .distance {
-        font-size: 0.9rem;
-        color: global.$color-text-secondary;
-        margin-bottom: global.$spacing-xs;
-        font-weight: global.$font-weight-bold;
-        border-bottom: 1px solid global.$color-border;
-        padding-bottom: global.$spacing-xs;
+        font-size: 0.8rem;
+        opacity: 0.8;
     }
 
     .time {
-        font-size: 1.75rem;
-        color: global.$color-text-primary;
-        font-weight: global.$font-weight-bold;
+        font-size: 1.4rem;
+        color: global.$color-primary-light;
     }
 
     .split {
         font-size: 0.9rem;
-        color: global.$color-text-secondary;
+        opacity: 0.9;
     }
 }
 
 
-// ESTILOS DE COMPETITIONCARD (PARA A OUTRA BUSCA)
+// Estilos do CompetitionCard (RESULTADO DA BUSCA DE COMPETIÇÃO)
 .competitionCard {
-    background: color.adjust(global.$color-card-background, $lightness: -5%);
+    background: darken(global.$color-card-background, 5%);
     border-radius: global.$border-radius;
     padding: global.$spacing-lg;
     border: 1px solid global.$color-border;
@@ -119,11 +128,13 @@
         margin-bottom: global.$spacing-xl;
     }
 }
+
 .partialsList {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: global.$spacing-lg;
 }
+
 .partialItem {
     background: global.$color-background;
     padding: global.$spacing-md;
@@ -136,6 +147,7 @@
         color: global.$color-text-primary;
     }
 }
+
 .timeDisplay {
     display: flex;
     justify-content: space-between;
@@ -145,6 +157,7 @@
         font-size: 1.1rem;
     }
 }
+
 .submitSection {
     margin-top: global.$spacing-xl;
     padding-top: global.$spacing-lg;
