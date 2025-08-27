@@ -1,0 +1,85 @@
+@use "../../styles/global.scss" as global;
+
+.label {
+    display: block;
+    margin-bottom: global.$spacing-md;
+    position: relative;
+
+    font-weight: global.$font-weight-medium;
+    color: global.$color-text-primary;
+    font-size: 1rem;
+    margin-bottom: global.$spacing-sm;
+
+    input {
+        width: 100%;
+        padding: global.$spacing-sm global.$spacing-md;
+        border: 2px solid global.$color-border;
+        border-radius: global.$border-radius-small;
+        font-size: 1rem;
+        font-family: global.$font-stack;
+        background: global.$color-white;
+        color: global.$color-text-primary;
+        transition: all 0.2s ease;
+        box-shadow: global.$shadow-sm;
+        padding-right: 45px; // Space for icon
+
+        &:hover {
+            border-color: global.$color-primary-light;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: global.$color-primary;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        &::placeholder {
+            color: global.$color-text-secondary;
+            opacity: 0.7;
+        }
+
+        &:disabled {
+            background: global.$color-gray-light;
+            color: global.$color-gray-dark;
+            cursor: not-allowed;
+            border-color: global.$color-gray-medium;
+        }
+    }
+
+    .icon {
+        position: absolute;
+        right: global.$spacing-md;
+        top: 50%;
+        transform: translateY(-50%);
+        color: global.$color-text-secondary;
+        cursor: pointer;
+        transition: color 0.2s ease;
+        margin-top: global.$spacing-sm; // Adjust for label
+
+        &:hover {
+            color: global.$color-primary;
+        }
+    }
+
+    p {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: global.$spacing-xs;
+        margin-bottom: 0;
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .label {
+        input {
+            font-size: 0.9rem;
+            padding: global.$spacing-xs global.$spacing-sm;
+            padding-right: 40px;
+        }
+
+        .icon {
+            right: global.$spacing-sm;
+        }
+    }
+}
