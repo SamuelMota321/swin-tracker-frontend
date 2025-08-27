@@ -1,0 +1,246 @@
+@use "../../styles/global.scss" as global;
+
+.searchContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.searchResults {
+    margin-top: global.$spacing-lg;
+}
+
+.searchQuery {
+    font-size: 1.1rem;
+    color: global.$color-text-secondary;
+    margin-bottom: global.$spacing-lg;
+    text-align: center;
+
+    span {
+        font-weight: global.$font-weight-bold;
+        color: global.$color-primary;
+        margin-left: global.$spacing-xs;
+    }
+}
+
+.resultsList {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-lg;
+}
+
+.noResults {
+    text-align: center;
+    padding: global.$spacing-xxl;
+    color: global.$color-text-secondary;
+
+    h1 {
+        color: global.$color-text-primary;
+        margin-bottom: global.$spacing-md;
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+    }
+}
+
+// Athlete Card Styles
+.athleteCard {
+    background: global.$color-white;
+    border-radius: global.$border-radius;
+    padding: global.$spacing-lg;
+    box-shadow: global.$shadow-md;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: global.$shadow-lg;
+    }
+}
+
+.athleteHeader {
+    margin-bottom: global.$spacing-lg;
+
+    h3 {
+        color: global.$color-text-primary;
+        font-size: 1.5rem;
+        font-weight: global.$font-weight-bold;
+        margin-bottom: global.$spacing-sm;
+    }
+}
+
+.competitionInfo {
+    display: flex;
+    gap: global.$spacing-md;
+    flex-wrap: wrap;
+
+    .competition, .event {
+        padding: global.$spacing-xs global.$spacing-sm;
+        border-radius: global.$border-radius-small;
+        font-size: 0.9rem;
+        font-weight: global.$font-weight-medium;
+    }
+
+    .competition {
+        background: global.$color-secondary;
+        color: global.$color-primary-dark;
+    }
+
+    .event {
+        background: global.$color-gray-light;
+        color: global.$color-text-secondary;
+    }
+}
+
+.timeCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: global.$spacing-md;
+}
+
+.timeCard {
+    padding: global.$spacing-md;
+    border-radius: global.$border-radius-small;
+    text-align: center;
+    color: global.$color-white;
+    font-weight: global.$font-weight-bold;
+    box-shadow: global.$shadow-sm;
+
+    .distance {
+        font-size: 0.8rem;
+        opacity: 0.9;
+        margin-bottom: global.$spacing-xs;
+    }
+
+    .time {
+        font-size: 1.2rem;
+        margin-bottom: global.$spacing-xs;
+    }
+
+    .split {
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    &.card50 {
+        background: global.$color-card-50;
+    }
+
+    &.card100 {
+        background: global.$color-card-100;
+    }
+
+    &.card150 {
+        background: global.$color-card-150;
+    }
+
+    &.card200 {
+        background: global.$color-card-200;
+    }
+}
+
+// Competition Card Styles
+.competitionCard {
+    background: global.$color-white;
+    border-radius: global.$border-radius;
+    padding: global.$spacing-xl;
+    box-shadow: global.$shadow-md;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: global.$shadow-lg;
+    }
+
+    h1 {
+        color: global.$color-text-primary;
+        font-size: 1.8rem;
+        font-weight: global.$font-weight-bold;
+        margin-bottom: global.$spacing-sm;
+        text-align: center;
+    }
+
+    > p {
+        color: global.$color-text-secondary;
+        font-size: 1.1rem;
+        text-align: center;
+        margin-bottom: global.$spacing-xl;
+    }
+}
+
+.partialsList {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-lg;
+    margin-bottom: global.$spacing-xl;
+}
+
+.partialItem {
+    background: global.$color-gray-light;
+    border-radius: global.$border-radius-small;
+    padding: global.$spacing-lg;
+    border: 1px solid global.$color-border;
+
+    h2 {
+        color: global.$color-text-primary;
+        font-size: 1.2rem;
+        font-weight: global.$font-weight-bold;
+        margin-bottom: global.$spacing-md;
+    }
+}
+
+.timeDisplay {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+        font-size: 1.1rem;
+        color: global.$color-text-primary;
+        font-weight: global.$font-weight-medium;
+    }
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: global.$spacing-sm;
+    justify-content: flex-start;
+}
+
+.submitSection {
+    text-align: center;
+    padding-top: global.$spacing-lg;
+    border-top: 1px solid global.$color-border;
+}
+
+@media (max-width: 768px) {
+    .timeCards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .competitionInfo {
+        flex-direction: column;
+        gap: global.$spacing-sm;
+    }
+
+    .athleteCard, .competitionCard {
+        padding: global.$spacing-md;
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+    }
+
+    .timeDisplay {
+        flex-direction: column;
+        gap: global.$spacing-sm;
+        align-items: flex-start;
+    }
+}
