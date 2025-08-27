@@ -1,97 +1,76 @@
 @use "../../../../styles/global.scss" as global;
 
 .seriesCard {
-    background: global.$color-white;
+    background: global.$color-card-background;
     border: 1px solid global.$color-border;
     border-radius: global.$border-radius-small;
     padding: global.$spacing-md;
+    margin-top: global.$spacing-md;
+}
+
+.seriesHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: global.$spacing-md;
 
-    .seriesHeader {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: global.$spacing-md;
-
-        label {
-            font-weight: global.$font-weight-medium;
-            color: global.$color-text-primary;
-            font-size: 1rem;
-        }
-
-        .removeButton {
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: global.$border-radius-small;
-            padding: global.$spacing-xs global.$spacing-sm;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-
-            &:hover {
-                background: #c82333;
-                transform: translateY(-1px);
-            }
-        }
-    }
-
-    .athletesList {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: global.$spacing-sm;
-        max-height: 200px;
-        overflow-y: auto;
-        padding: global.$spacing-sm;
-        border: 1px solid global.$color-border;
-        border-radius: global.$border-radius-small;
-        background: global.$color-gray-light;
-
-        .athleteItem {
-            display: flex;
-            align-items: center;
-            gap: global.$spacing-sm;
-            padding: global.$spacing-xs;
-            border-radius: global.$border-radius-small;
-            transition: background-color 0.2s ease;
-
-            &:hover {
-                background: global.$color-white;
-            }
-
-            input[type="checkbox"] {
-                width: 16px;
-                height: 16px;
-                accent-color: global.$color-primary;
-                cursor: pointer;
-            }
-
-            label {
-                font-size: 0.9rem;
-                color: global.$color-text-primary;
-                cursor: pointer;
-                flex: 1;
-            }
-        }
-    }
-
-    .error {
-        color: #dc3545;
-        font-size: 0.85rem;
-        margin-top: global.$spacing-sm;
+    label {
+        color: global.$color-text-primary;
+        font-weight: global.$font-weight-medium;
     }
 }
 
-@media (max-width: 768px) {
-    .seriesCard {
-        .seriesHeader {
-            flex-direction: column;
-            gap: global.$spacing-sm;
-            text-align: center;
-        }
+.removeButton {
+    background-color: #E53E3E;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    &:hover { background-color: #C53030; }
+}
 
-        .athletesList {
-            grid-template-columns: 1fr;
-        }
+.athletesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: global.$spacing-sm;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: global.$spacing-md;
+    border-radius: global.$border-radius-small;
+    background-color: global.$color-background; // CORREÇÃO: Usando a cor de fundo principal
+    border: 1px solid global.$color-border;
+}
+
+.athleteItem {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    padding: global.$spacing-xs;
+    border-radius: global.$border-radius-small;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: lighten(global.$color-background, 5%);
     }
+
+    input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: global.$color-primary;
+        cursor: pointer;
+    }
+
+    label {
+        color: global.$color-text-secondary;
+        cursor: pointer;
+        flex: 1;
+    }
+}
+
+.error {
+    color: #E53E3E;
+    font-size: 0.875rem;
+    margin-top: global.$spacing-sm;
 }

@@ -1,0 +1,28 @@
+@use "../../styles/global.scss" as global;
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-lg;
+}
+
+.submitButton {
+    margin-top: global.$spacing-md;
+}
+
+.registerLink {
+    text-align: center;
+    margin-top: global.$spacing-lg;
+    color: global.$color-text-secondary;
+
+    a {
+        color: global.$color-primary-light;
+        font-weight: global.$font-weight-bold;
+        margin-left: global.$spacing-xs;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

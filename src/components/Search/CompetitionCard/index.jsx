@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, forwardRef, useContext } from 'react'
+import { useState, useEffect, forwardRef, useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { partialSchema } from '../../../schemas/partialSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -6,106 +6,66 @@ import { FaPen } from "react-icons/fa"
 import { Button } from '../../Button'
 import { AppContext } from '../../../providers/AppContext'
 import styles from '../styles.module.scss'
+import inputStyles from '../../Input/styles.module.scss' // Reutilizando estilos do Input
 
 const TimeInput = forwardRef(({ label, name, error, onChange: rhfOnChange, onBlur: rhfOnBlur, value: propValue, ...rest }, ref) => {
-  const inputId = `input-${label}-${name || 'time'}` 
   const [displayValue, setDisplayValue] = useState('')
 
   useEffect(() => {
-    let initialFormatted = ''
-    if (propValue) {
-      const digits = String(propValue).replace(/\D/g, '')
-      if (digits.length === 4) {
-        initialFormatted = digits.substring(0, 2) + '.' + digits.substring(2)
-      } else if (digits.length > 0) {
-        initialFormatted = String(propValue)
-      }
-    }
-    setDisplayValue(initialFormatted)
-  }, [propValue])
+    // Formata o valor inicial que vem do estado
+    setDisplayValue(propValue ? String(propValue).replace(/(\d{2})(\d{2})/, '$1.$2') : '');
+  }, [propValue]);
+
 
   const handleChange = (e) => {
     const input = e.target.value
-
     let digits = input.replace(/\D/g, '')
 
     if (digits.length > 4) {
       digits = digits.substring(0, 4)
     }
 
-    let formatted = ''
-    if (digits.length >= 1) {
-      formatted = digits.substring(0, 2)
+    let formatted = digits;
+    if (digits.length > 2) {
+      formatted = digits.substring(0, 2) + '.' + digits.substring(2);
     }
-    if (digits.length >= 3) {
-      formatted = formatted + '.' + digits.substring(2)
-    }
-
+    
     setDisplayValue(formatted)
-
+    
+    // Passa o valor formatado para o React Hook Form
     if (rhfOnChange) {
-      const syntheticEvent = { target: { name: name, value: formatted } }
-      rhfOnChange(syntheticEvent)
+      rhfOnChange({ target: { name, value: formatted } });
     }
   }
 
   const handleBlur = (e) => {
-    let finalFormattedValue = displayValue
-    const digits = displayValue.replace(/\D/g, '')
-
-    if (digits.length > 0 && digits.length < 4) {
-      const padded = digits.padEnd(4, '0')
-      finalFormattedValue = padded.substring(0, 2) + '.' + padded.substring(2, 4)
-    } else if (digits.length === 4) {
-      finalFormattedValue = digits.substring(0, 2) + '.' + digits.substring(2, 4)
-    } else if (digits.length === 0) {
-      finalFormattedValue = ''
-    }
-
-    setDisplayValue(finalFormattedValue)
-    if (rhfOnChange) {
-      const syntheticEvent = { target: { name: name, value: finalFormattedValue } }
-      rhfOnChange(syntheticEvent)
-    }
-
     if (rhfOnBlur) {
-      rhfOnBlur(e)
+        rhfOnBlur(e)
     }
   }
 
   return (
-    <div style={{ marginBottom: '10px' }}>
-      <label htmlFor={inputId} style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>{label}</label>
-      <input
-        ref={ref}
-        type="text"
-        id={inputId}
-        name={name}
-        value={displayValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="ss.SS"
-        maxLength={5}
-        aria-invalid={error ? "true" : "false"}
-        style={{
-          width: '100%',
-          padding: '12px 16px',
-          border: '2px solid #DEE2E6',
-          borderRadius: '12px',
-          fontSize: '1rem',
-          fontFamily: 'Inter, sans-serif',
-          background: '#FFFFFF',
-          transition: 'all 0.2s ease',
-          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)'
-        }}
-        {...rest}
-      />
-      {error && <span style={{ color: '#dc3545', fontSize: '0.85rem', display: 'block', marginTop: '4px' }}>{error.message}</span>}
+    <div className={inputStyles.label}>
+      <label>{label}</label>
+      <div className={inputStyles.inputWrapper}>
+        <input
+          ref={ref}
+          type="text"
+          name={name}
+          value={displayValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="ss.SS"
+          maxLength={5}
+          {...rest}
+        />
+      </div>
+      {error && <p>{error.message}</p>}
     </div>
   )
 })
 
-export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll }) => {
+export const CompetitionCard = ({ competitionName, proofName, data }) => {
   const [times, setTimes] = useState(() => {
     const initialTimes = {}
     data.forEach(item => {
@@ -114,20 +74,11 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
     return initialTimes
   })
   const [editingItemId, setEditingItemId] = useState(null)
-  const { control, trigger, formState: { errors }, setValue } = useForm({
+  const { control, trigger, formState: { errors }, setValue, watch } = useForm({
     resolver: zodResolver(partialSchema),
     mode: 'onBlur',
   })
   const { patchPartials } = useContext(AppContext)
-
-  const handleTimeChange = async (partialId, value) => {
-    setTimes(prevTimes => ({
-      ...prevTimes,
-      [partialId]: value
-    }))
-
-    setValue('time', value)
-  }
 
   const handleEditClick = (partialId) => {
     setEditingItemId(partialId)
@@ -137,9 +88,9 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
   const handleSaveClick = async (partialId) => {
     const isValid = await trigger('time')
     if (isValid) {
+      const newTime = watch('time');
+      setTimes(prev => ({...prev, [partialId]: newTime}))
       setEditingItemId(null)
-    } else {
-      console.log("Validation error for", partialId, errors.time?.message)
     }
   }
 
@@ -148,33 +99,29 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
   }
 
   const handleFinalSubmit = async () => {
+    // Garante que a última edição seja salva no estado antes de enviar
+    if (editingItemId) {
+        const isValid = await trigger('time');
+        if (!isValid) {
+            alert('Por favor, corrija o tempo inválido antes de enviar.');
+            return;
+        }
+        const lastEditedTime = watch('time');
+        times[editingItemId] = lastEditedTime;
+    }
+
     const payload = data.map(item => ({
       partialId: item.partial.id,
-      time: parseTimeToNumber(times[item.partial.id]),
-      frequency: null
-    }))
-
-    const validPayload = payload.filter(item => item.time !== undefined && item.time !== null && !isNaN(item.time))
-
-    patchPartials(validPayload)
-    console.log("Submitting payload:", validPayload)
-
-    if (onSubmitAll) {
-      onSubmitAll(validPayload)
+      time: parseFloat(String(times[item.partial.id]).replace(",", ".")),
+      frequency: null 
+    })).filter(item => !isNaN(item.time) && item.time > 0);
+    
+    if (payload.length > 0) {
+        patchPartials({ partials: payload });
+        alert('Tempos enviados com sucesso!');
+    } else {
+        alert('Nenhum tempo válido para enviar.');
     }
-  }
-
-  const parseTimeToNumber = (value) => {
-    if (typeof value !== 'string' || value.trim() === '') return null
-    const digits = value.replace(/\D/g, '')
-    if (digits.length === 4) {
-      const seconds = parseInt(digits.substring(0, 2), 10)
-      const hundredths = parseInt(digits.substring(2, 4), 10)
-      const num = parseFloat(`${seconds}.${hundredths}`)
-      return isNaN(num) ? null : num
-    }
-    const num = parseFloat(value)
-    return isNaN(num) ? null : num
   }
 
   let lastAthleteName = ""
@@ -185,7 +132,7 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
       <h1>{competitionName}</h1>
       <p>{proofName}</p>
       <div className={styles.partialsList}>
-        {data.map((item, i) => {
+        {data.map((item) => {
           const currentAthlete = item.partial.athlete.name
           if (currentAthlete !== lastAthleteName) {
             lastAthleteName = currentAthlete
@@ -193,28 +140,25 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
           } else {
             count += 1
           }
-          const labelValue = `${count * 25}`
+          const labelValue = `${count * 50}` // Assumindo piscina de 50
           const partialId = item.partial.id
           const isEditing = editingItemId === partialId
           const currentTime = times[partialId] 
 
           return (
-            <div key={partialId || i} className={styles.partialItem}>
+            <div key={partialId} className={styles.partialItem}>
               <h2>{currentAthlete}</h2>
               {isEditing ? (
                 <div className={styles.editForm}>
                   <Controller
-                    name={`time_${partialId}`}
+                    name="time"
                     control={control}
                     defaultValue={currentTime}
-                    render={({ field, fieldState }) => (
+                    render={({ field }) => (
                       <TimeInput
-                        value={currentTime}
-                        onChange={(e) => handleTimeChange(partialId, e.target.value)}
-                        onBlur={field.onBlur}
-                        ref={field.ref}
+                        {...field}
                         label={`Parcial ${labelValue}m`}
-                        error={editingItemId === partialId ? errors.time : null}
+                        error={errors.time}
                       />
                     )}
                   />
@@ -222,10 +166,7 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
                     <Button 
                       type="button" 
                       text="Salvar" 
-                      onClick={() => {
-                        handleFinalSubmit()
-                        handleSaveClick(partialId)
-                      }} 
+                      onClick={() => handleSaveClick(partialId)} 
                       size="small"
                     />
                     <Button 
@@ -242,7 +183,7 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
                   <p>Tempo: {currentTime || "N/A"}</p>
                   <FaPen 
                     size={15} 
-                    color='#1976D2' 
+                    color='#64B5F6' 
                     onClick={() => handleEditClick(partialId)} 
                     style={{ cursor: 'pointer' }} 
                   />
@@ -255,7 +196,7 @@ export const CompetitionCard = ({ competitionName, proofName, data, onSubmitAll 
       <div className={styles.submitSection}>
         <Button 
           type="button" 
-          text="Enviar Todos os Tempos" 
+          text="Enviar Tempos" 
           onClick={handleFinalSubmit}
           size="large"
         />

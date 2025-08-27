@@ -36,6 +36,80 @@
     }
 }
 
+// Estilos do AthleteCard (RESULTADO DA BUSCA DE ATLETA)
+.athleteCard {
+    background: global.$color-card-background;
+    border-radius: global.$border-radius;
+    padding: global.$spacing-lg;
+    box-shadow: global.$shadow-md;
+    border-left: 4px solid global.$color-primary;
+}
+
+.athleteHeader {
+    margin-bottom: global.$spacing-lg;
+    padding-bottom: global.$spacing-md;
+    border-bottom: 1px solid global.$color-border;
+    
+    h3 {
+        color: global.$color-text-primary;
+        font-size: 1.5rem;
+    }
+}
+
+.competitionInfo {
+    display: flex;
+    gap: global.$spacing-md;
+    margin-top: global.$spacing-sm;
+
+    .competition, .event {
+        padding: global.$spacing-xs global.$spacing-sm;
+        border-radius: global.$border-radius-small;
+        font-size: 0.9rem;
+    }
+
+    .competition {
+        background: global.$color-primary-dark;
+        color: global.$color-white;
+    }
+
+    .event {
+        background: global.$color-card-header;
+        color: global.$color-text-secondary;
+    }
+}
+
+.timeCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: global.$spacing-md;
+}
+
+.timeCard {
+    padding: global.$spacing-md;
+    border-radius: global.$border-radius-small;
+    text-align: center;
+    color: global.$color-white;
+    font-weight: global.$font-weight-bold;
+    background: linear-gradient(145deg, global.$color-card-header, global.$color-background);
+
+    .distance {
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    .time {
+        font-size: 1.4rem;
+        color: global.$color-primary-light;
+    }
+
+    .split {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+}
+
+
+// Estilos do CompetitionCard (RESULTADO DA BUSCA DE COMPETIÇÃO)
 .competitionCard {
     background: darken(global.$color-card-background, 5%);
     border-radius: global.$border-radius;

@@ -1,18 +1,14 @@
 import { forwardRef, useState } from "react"
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaSearch } from "react-icons/fa";
 import styles from "./styles.module.scss";
-import { FaSearch } from "react-icons/fa";
 
-
-
-export const Input = forwardRef(({ ...rest }, ref) => {
+export const Input = forwardRef(({ label, error, search, ...rest }, ref) => {
 	const [passwordVisibility, setPasswordVisibility] = useState(false);
 
 	return (
-		<div className={rest.className}>
-			<label className={styles.label} >
-				{rest.label}
+		<div className={styles.label}>
+			{label && <label>{label}</label>}
+			<div className={styles.inputWrapper}>
 				<input
 					ref={ref}
 					{...rest}
@@ -23,19 +19,19 @@ export const Input = forwardRef(({ ...rest }, ref) => {
 						<FaEye
 							className={styles.icon}
 							onClick={() => setPasswordVisibility(!passwordVisibility)}
-							size={21}
+							size={20}
 						/>
 					) : (
 						<FaEyeSlash
 							className={styles.icon}
 							onClick={() => setPasswordVisibility(!passwordVisibility)}
-							size={21}
+							size={20}
 						/>
 					)
 				) : null}
-				{rest.search ? <FaSearch className={styles.icon} /> : <></>}
-				<p>{rest.error?.message}</p>
-			</label>
+				{search && <FaSearch className={styles.icon} />}
+			</div>
+			{error && <p>{error.message}</p>}
 		</div>
 	)
 })

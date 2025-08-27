@@ -1,0 +1,54 @@
+@use "../../styles/global.scss" as global;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: global.$spacing-md global.$spacing-xl;
+    background: global.$color-primary-dark;
+    box-shadow: global.$shadow-md;
+    color: global.$color-white;
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-sm;
+
+        img {
+            height: 40px;
+            width: 40px;
+        }
+
+        span {
+            font-size: 1.5rem;
+            font-weight: global.$font-weight-bold;
+            color: global.$color-white;
+        }
+    }
+
+    nav ul {
+        display: flex;
+        align-items: center;
+        gap: global.$spacing-lg;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            cursor: pointer;
+        }
+
+        a, li {
+            color: global.$color-white;
+            text-decoration: none;
+            font-weight: global.$font-weight-medium;
+            padding: global.$spacing-xs global.$spacing-sm;
+            border-radius: global.$border-radius-small;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+}
