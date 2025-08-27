@@ -1,10 +1,10 @@
-import { useContext } from "react"
-import styles from "./styles.module.scss"
-import { AppContext } from "../../providers/AppContext"
-import { Link } from "react-router-dom"
+import { useContext } from "react";
+import styles from "./styles.module.scss";
+import { AppContext } from "../../providers/AppContext";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
-    const { user, userLogout } = useContext(AppContext)
+    const { userState, userLogout } = useContext(AppContext);
 
     return (
         <header className={styles.header}>
@@ -13,9 +13,13 @@ export const Header = () => {
                 <span>Swintracker</span>
             </div>
             
-            {user && (
+            {userState && (
                  <nav>
                     <ul>
+                        {/* A verificação é feita diretamente na propriedade 'role' do estado */}
+                        {userState.role === 'admin' && (
+                            <li><Link to={"/registrar-tecnico"}>Registrar Técnico</Link></li>
+                        )}
                         <li><Link to={"/competicoes"}>Competições</Link></li>
                         <li><Link to={"/meus-atletas"}>Meus atletas</Link></li>
                         <li onClick={() => userLogout()}>Sair</li>
@@ -23,5 +27,5 @@ export const Header = () => {
                 </nav>
             )}
         </header>
-    )
-}
+    );
+};

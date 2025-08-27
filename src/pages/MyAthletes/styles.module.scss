@@ -51,6 +51,11 @@
     text-align: center;
 }
 
+// CORREÇÃO AQUI
+.submitButton {
+    margin-top: global.$spacing-lg; // Adiciona um espaço acima do botão
+}
+
 @media (max-width: 768px) {
     .content {
         grid-template-columns: 1fr;

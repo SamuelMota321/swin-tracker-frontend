@@ -1,0 +1,35 @@
+@use "../../styles/global.scss" as global;
+
+.container {
+    padding: global.$spacing-xl;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 80px);
+}
+
+.content {
+    background: global.$color-card-background;
+    padding: global.$spacing-xl;
+    border-radius: global.$border-radius;
+    box-shadow: global.$shadow-lg;
+    width: 100%;
+    max-width: 600px;
+
+    h2 {
+        text-align: center;
+        margin-bottom: global.$spacing-lg;
+        padding-bottom: global.$spacing-md;
+        border-bottom: 1px solid global.$color-border;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+}
+
+.submitButton {
+    margin-top: global.$spacing-lg;
+}

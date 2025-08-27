@@ -46,11 +46,6 @@ export const FormLogin = () => {
                     size="large"
                 />
             </form>
-            
-            <p className={styles.registerLink}>
-                Não possui conta?
-                <Link to="/registrar">Clique Aqui!</Link>
-            </p>
         </div>
     )
 }
