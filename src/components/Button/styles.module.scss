@@ -1,0 +1,61 @@
+@use "../../styles/global.scss" as global;
+
+.button {
+    background: global.$color-primary;
+    color: global.$color-white;
+    border: none;
+    border-radius: global.$border-radius-small;
+    padding: global.$spacing-sm global.$spacing-md;
+    font-size: 1rem;
+    font-weight: global.$font-weight-medium;
+    font-family: global.$font-stack;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: global.$shadow-sm;
+
+    &:hover {
+        background: global.$color-primary-dark;
+        transform: translateY(-1px);
+        box-shadow: global.$shadow-md;
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: global.$shadow-sm;
+    }
+
+    &.secondary {
+        background: global.$color-white;
+        color: global.$color-primary;
+        border: 2px solid global.$color-primary;
+
+        &:hover {
+            background: global.$color-primary;
+            color: global.$color-white;
+        }
+    }
+
+    &.small {
+        padding: global.$spacing-xs global.$spacing-sm;
+        font-size: 0.875rem;
+    }
+
+    &.large {
+        padding: global.$spacing-md global.$spacing-lg;
+        font-size: 1.125rem;
+        font-weight: global.$font-weight-bold;
+    }
+
+    &:disabled {
+        background: global.$color-gray-medium;
+        color: global.$color-gray-dark;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+
+        &:hover {
+            background: global.$color-gray-medium;
+            transform: none;
+        }
+    }
+}
