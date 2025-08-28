@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -13,8 +12,8 @@ import { ProofCard } from "./ProofCard";
 import styles from "./styles.module.scss";
 
 export const CompetitionRegister = () => {
-    const { competitionRegister, getAthleteList, athleteList } = useContext(AppContext);
-    const navigate = useNavigate();
+    // 1. Pega o estado 'isLoading' do contexto
+    const { competitionRegister, getAthleteList, athleteList, isLoading } = useContext(AppContext);
 
     const {
         register,
@@ -84,6 +83,7 @@ export const CompetitionRegister = () => {
                             type="button"
                             className={styles.addProofButton}
                             onClick={() => proofs.append({ distance: 0, styleType: "", series: [] })}
+                            disabled={isLoading} // Também desabilita este botão
                         >
                             + Adicionar prova
                         </button>
@@ -91,9 +91,11 @@ export const CompetitionRegister = () => {
 
                     <Button 
                         type="submit" 
-                        text="Criar Torneio" 
+                        // 2. Muda o texto e desabilita o botão com base no 'isLoading'
+                        text={isLoading ? "Criando..." : "Criar Torneio"} 
                         className={styles.submitButton}
                         size="large"
+                        disabled={isLoading}
                     />
                 </form>
             </div>

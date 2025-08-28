@@ -20,8 +20,26 @@
     margin-bottom: global.$spacing-xl;
     border-bottom: 1px solid global.$color-border;
     padding-bottom: global.$spacing-lg;
-
+    flex-wrap: wrap; // Permite que o botão quebre a linha se não houver espaço
+    gap: global.$spacing-lg; // Adiciona um espaço entre o título e o botão
+    
     h1 {
         color: global.$color-text-primary;
+    }
+}
+
+// Regra para telas menores
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column; // Coloca o botão abaixo do título
+        align-items: stretch; // Faz o botão ocupar a largura total
+
+        h1 {
+            text-align: center; // Centraliza o título
+        }
+    }
+
+    .content {
+        padding: global.$spacing-lg;
     }
 }

@@ -1,17 +1,17 @@
-import { useContext, useState } from "react"
-import { Input } from "../Input"
-import { AthleteCard } from "./AthetesCard"
-import { AppContext } from "../../providers/AppContext"
-import { CompetitionCard } from "./CompetitionCard"
-import styles from "./styles.module.scss"
+import { useContext, useState } from "react";
+import { Input } from "../Input";
+import { AthleteCard } from "./AthetesCard";
+import { CompetitionResultCard } from "../CompetitionResultCard"; // 1. Importe o novo componente
+import { AppContext } from "../../providers/AppContext";
+import styles from "./styles.module.scss";
 
 export const SearchAthletes = () => {
-  const { searchAthletes, searchList } = useContext(AppContext)
-  const [searchInputContent, setSearchInputContent] = useState("")
+  const { searchAthletes, searchList } = useContext(AppContext);
+  const [searchInputContent, setSearchInputContent] = useState("");
 
   const submit = (searchTerm) => {
-    searchAthletes(searchTerm)
-  }
+    searchAthletes(searchTerm);
+  };
 
   return (
     <div className={styles.searchContainer}>
@@ -19,50 +19,40 @@ export const SearchAthletes = () => {
         type="text"
         search="true"
         placeholder="Digite o nome do atleta..."
+        value={searchInputContent}
         onChange={(e) => {
-          setSearchInputContent(e.target.value)
-          submit(searchInputContent)
+          const value = e.target.value;
+          setSearchInputContent(value);
+          submit(value);
         }}
       />
-
       {searchInputContent && (
         <div className={styles.searchResults}>
-          <p className={styles.searchQuery}>
-            Resultados de busca para:
-            <span>{searchInputContent}</span>
-          </p>
-
-          {searchList ? (
+          <p className={styles.searchQuery}>Resultados para: <span>{searchInputContent}</span></p>
+          {searchList.length > 0 ? (
             <ul className={styles.resultsList}>
               {searchList.map((data, i) => (
-                <AthleteCard 
-                  key={i}
-                  name={data.athleteName}
-                  competition={data.competitionName}
-                  proof={data.proof}
-                  partials={data.partials} 
-                />
+                <AthleteCard key={i} {...data} />
               ))}
             </ul>
           ) : (
             <div className={styles.noResults}>
-              <h1>Desculpe! :(</h1>
-              <p>Nenhum resultado encontrado</p>
+              <h1>Nenhum resultado encontrado</h1>
             </div>
           )}
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export const SearchCompetition = () => {
-  const { searchCompetition, searchList } = useContext(AppContext)
-  const [searchInputContent, setSearchInputContent] = useState("")
+  const { searchCompetition, searchList } = useContext(AppContext);
+  const [searchInputContent, setSearchInputContent] = useState("");
 
   const submit = (searchTerm) => {
-    searchCompetition(searchTerm)
-  }
+    searchCompetition(searchTerm);
+  };
 
   return (
     <div className={styles.searchContainer}>
@@ -70,41 +60,38 @@ export const SearchCompetition = () => {
         type="text"
         search="true"
         placeholder="Digite o nome da competição..."
+        value={searchInputContent}
         onChange={(e) => {
-          setSearchInputContent(e.target.value)
-          submit(searchInputContent)
+          const value = e.target.value;
+          setSearchInputContent(value);
+          submit(value);
         }}
       />
-
       {searchInputContent && (
         <div className={styles.searchResults}>
-          <p className={styles.searchQuery}>
-            Resultados de busca para:
-            <span>{searchInputContent}</span>
-          </p>
-
-          {searchList ? (
+          <p className={styles.searchQuery}>Resultados para: <span>{searchInputContent}</span></p>
+          {searchList.length > 0 ? (
             <ul className={styles.resultsList}>
               {searchList.map((data, i) => {
-                const proofsNames = Object.keys(data.proofs)
+                const proofsNames = Object.keys(data.proofs);
                 return proofsNames.map((proofName, j) => (
-                  <CompetitionCard 
+                  // 2. Use o novo componente aqui
+                  <CompetitionResultCard 
                     key={`${i}-${j}`}
                     competitionName={data.competitionName}
                     proofName={proofName}
                     data={data.proofs[proofName]} 
                   />
-                ))
+                ));
               })}
             </ul>
           ) : (
             <div className={styles.noResults}>
-              <h1>Desculpe! :(</h1>
-              <p>Nenhum resultado encontrado</p>
+              <h1>Nenhuma competição encontrada</h1>
             </div>
           )}
         </div>
       )}
     </div>
-  )
-}
+  );
+};
