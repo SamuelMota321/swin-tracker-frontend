@@ -110,7 +110,7 @@ export const AppContextPovider = ({ children }) => {
   const patchPartials = async (formData) => {
     try {
       const token = localStorage.getItem("@TOKEN");
-      await api.patch("/tecnico/atualizar-parciais", formData, { headers: { Authorization: `Bearer ${token}` } });
+      await api.patch("/tecnico/atualizar-parciais", formData.partials, { headers: { Authorization: `Bearer ${token}` } });
     } catch (error) { console.log(error); }
   };
 
