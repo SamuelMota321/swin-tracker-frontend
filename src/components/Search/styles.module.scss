@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "../../styles/global.scss" as global;
 
 .searchContainer {
@@ -17,16 +18,13 @@
         font-weight: global.$font-weight-bold;
     }
 }
-
-// CORREÇÃO AQUI: Adicionado 'gap' para o espaçamento
 .resultsList {
     display: flex;
     flex-direction: column;
-    gap: global.$spacing-lg; // Esta linha adiciona o espaço vertical entre os cards
+    gap: global.$spacing-lg;
     padding: 0;
     list-style-type: none;
 }
-
 .noResults {
     text-align: center;
     padding: global.$spacing-xxl 0;
@@ -34,7 +32,6 @@
     h1 { margin-bottom: global.$spacing-md; }
 }
 
-// ESTILOS PARA O ATHLETECARD DA HOME
 .athleteCard {
     background: global.$color-card-background;
     border-radius: global.$border-radius;
@@ -47,7 +44,8 @@
 
     &:hover {
         border-left-color: global.$color-primary-light;
-        background-color: lighten(global.$color-card-background, 3%);
+        // CORREÇÃO AQUI
+        background-color: color.adjust(global.$color-card-background, $lightness: 3%);
     }
 }
 

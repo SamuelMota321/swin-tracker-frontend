@@ -1,22 +1,23 @@
-import { Link } from "react-router-dom"
-import { Button } from "../Button"
-import { Input } from "../Input"
-import { useContext } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { AppContext } from "../../providers/AppContext"
-import { loginSchema } from "../../schemas/LoginSchema"
-import styles from "./styles.module.scss"
+import { Link } from "react-router-dom";
+import { Button } from "../Button";
+import { Input } from "../Input";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AppContext } from "../../providers/AppContext";
+import { loginSchema } from "../../schemas/LoginSchema";
+import styles from "./styles.module.scss";
 
 export const FormLogin = () => {
-    const { userLogin, error } = useContext(AppContext);
+    // Pega o isLoading do contexto
+    const { userLogin, error, isLoading } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(loginSchema)
     });
 
     const submit = (formData) => {
         userLogin(formData)
-    }
+    };
 
     return (
         <div>
@@ -29,6 +30,7 @@ export const FormLogin = () => {
                     label="Usuário"
                     {...register("login")}
                     error={errors.login}
+                    disabled={isLoading} // Desabilita o input durante o loading
                 />
 
                 <Input
@@ -37,15 +39,17 @@ export const FormLogin = () => {
                     label="Senha"
                     {...register("password")}
                     error={errors.password}
+                    disabled={isLoading} // Desabilita o input durante o loading
                 />
                 
                 <Button 
                     type="submit" 
-                    text="Continuar" 
+                    text={isLoading ? "Entrando..." : "Continuar"} 
                     className={styles.submitButton}
                     size="large"
+                    disabled={isLoading} // Desabilita o botão
                 />
             </form>
         </div>
-    )
-}
+    );
+};
