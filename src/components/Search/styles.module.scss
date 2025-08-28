@@ -1,4 +1,3 @@
-@use "sass:color";
 @use "../../styles/global.scss" as global;
 
 .searchContainer {
@@ -18,11 +17,16 @@
         font-weight: global.$font-weight-bold;
     }
 }
+
+// CORREÇÃO AQUI: Adicionado 'gap' para o espaçamento
 .resultsList {
     display: flex;
     flex-direction: column;
-    gap: global.$spacing-lg;
+    gap: global.$spacing-lg; // Esta linha adiciona o espaço vertical entre os cards
+    padding: 0;
+    list-style-type: none;
 }
+
 .noResults {
     text-align: center;
     padding: global.$spacing-xxl 0;
@@ -30,18 +34,31 @@
     h1 { margin-bottom: global.$spacing-md; }
 }
 
-// NOVOS ESTILOS PARA O ATHLETECARD
+// ESTILOS PARA O ATHLETECARD DA HOME
 .athleteCard {
     background: global.$color-card-background;
     border-radius: global.$border-radius;
     padding: global.$spacing-lg;
     box-shadow: global.$shadow-lg;
     border-left: 4px solid global.$color-primary;
+    list-style-type: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        border-left-color: global.$color-primary-light;
+        background-color: lighten(global.$color-card-background, 3%);
+    }
 }
 
 .athleteHeader {
-    margin-bottom: global.$spacing-lg;
-    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0; 
+}
+
+.athleteInfo {
     h3 {
         color: global.$color-text-primary;
         font-size: 1.75rem;
@@ -53,7 +70,6 @@
     display: flex;
     gap: global.$spacing-sm;
     margin-top: global.$spacing-sm;
-
     .tag {
         background-color: global.$color-primary-dark;
         color: global.$color-white;
@@ -65,10 +81,23 @@
     }
 }
 
+.toggleIcon {
+    font-size: 1.5rem;
+    color: global.$color-text-secondary;
+    transition: transform 0.3s ease-in-out;
+
+    &.expanded {
+        transform: rotate(180deg);
+    }
+}
+
 .timeCards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: global.$spacing-md;
+    margin-top: global.$spacing-lg;
+    padding-top: global.$spacing-lg;
+    border-top: 1px solid global.$color-border;
 }
 
 .timeCard {
@@ -97,58 +126,4 @@
         font-size: 0.9rem;
         color: global.$color-text-secondary;
     }
-}
-
-
-// ESTILOS DE COMPETITIONCARD (PARA A OUTRA BUSCA)
-.competitionCard {
-    background: color.adjust(global.$color-card-background, $lightness: -5%);
-    border-radius: global.$border-radius;
-    padding: global.$spacing-lg;
-    border: 1px solid global.$color-border;
-
-    h1 {
-        text-align: center;
-        margin-bottom: global.$spacing-xs;
-        font-size: 1.8rem;
-    }
-
-    > p {
-        text-align: center;
-        color: global.$color-text-secondary;
-        margin-bottom: global.$spacing-xl;
-    }
-}
-.partialsList {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: global.$spacing-lg;
-}
-.partialItem {
-    background: global.$color-background;
-    padding: global.$spacing-md;
-    border-radius: global.$border-radius-small;
-    border-left: 4px solid global.$color-primary-dark;
-    
-    h2 {
-        font-size: 1.2rem;
-        margin-bottom: global.$spacing-md;
-        color: global.$color-text-primary;
-    }
-}
-.timeDisplay {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    p { 
-        color: global.$color-text-primary; 
-        font-size: 1.1rem;
-    }
-}
-.submitSection {
-    margin-top: global.$spacing-xl;
-    padding-top: global.$spacing-lg;
-    border-top: 1px solid global.$color-border;
-    display: flex;
-    justify-content: flex-end;
 }

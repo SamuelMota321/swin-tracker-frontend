@@ -1,0 +1,39 @@
+@use "../../styles/global.scss" as global;
+
+.container {
+    padding: global.$spacing-xl;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+}
+
+.content {
+    background: global.$color-card-background;
+    padding: global.$spacing-xl;
+    border-radius: global.$border-radius;
+    box-shadow: global.$shadow-lg;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+
+    h2 {
+        margin-bottom: global.$spacing-sm;
+    }
+
+    p {
+        color: global.$color-text-secondary;
+        margin-bottom: global.$spacing-xl;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: global.$spacing-md;
+    text-align: left;
+}
+
+.submitButton {
+    margin-top: global.$spacing-lg;
+}

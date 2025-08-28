@@ -1,52 +1,36 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react'; // 1. Importe o useState
 import styles from '../styles.module.scss';
+import { FaChevronDown } from 'react-icons/fa'; // 2. Importe um ícone
 
-// Função para formatar o tempo da parcial (ex: 22.17)
+// Funções de formatação de tempo (permanecem as mesmas)
 const formatSplitTime = (timeInSeconds) => {
     if (typeof timeInSeconds !== 'number' || isNaN(timeInSeconds)) return "00.00";
-    
     const seconds = Math.floor(timeInSeconds);
     const hundredths = Math.round((timeInSeconds - seconds) * 100);
-
-    const formattedSeconds = String(seconds).padStart(2, '0');
-    const formattedHundredths = String(hundredths).padStart(2, '0');
-
-    return `${formattedSeconds}.${formattedHundredths}`;
+    return `${String(seconds).padStart(2, '0')}.${String(hundredths).padStart(2, '0')}`;
 };
-
-// Função para formatar o tempo acumulado (ex: 1:22:39)
 const formatCumulativeTime = (timeInSeconds) => {
     if (typeof timeInSeconds !== 'number' || isNaN(timeInSeconds)) return "00:00.00";
-
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
     const hundredths = Math.round((timeInSeconds - Math.floor(timeInSeconds)) * 100);
-
-    const formattedMinutes = String(minutes);
     const formattedSeconds = String(seconds).padStart(2, '0');
     const formattedHundredths = String(hundredths).padStart(2, '0');
+    return minutes > 0 ? `${minutes}:${formattedSeconds}.${formattedHundredths}` : `${formattedSeconds}.${formattedHundredths}`;
+};
 
-    if (minutes > 0) {
-        return `${formattedMinutes}:${formattedSeconds}.${formattedHundredths}`;
-    }
-    return `${formattedSeconds}.${formattedHundredths}`;
-}
+export const AthleteCard = ({ athleteName, competitionName, proof, partials }) => { 
+    // 3. Adiciona o estado para controlar se o card está expandido
+    const [isExpanded, setIsExpanded] = useState(false);
 
-
-export const AthleteCard = ({ name, competition, proof, partials }) => { 
-    // Processa os dados das parciais para calcular os tempos acumulados
     const processedPartials = useMemo(() => {
         if (!partials || partials.length === 0) return [];
-
         let cumulativeTime = 0;
-
-        // Filtra parciais com tempo nulo e calcula o tempo acumulado
         return partials
             .filter(p => typeof p.time === 'number') 
             .map(p => {
                 const splitTime = p.time;
                 cumulativeTime += splitTime;
-
                 return {
                     distance: p.meters,
                     splitTime: formatSplitTime(splitTime),
@@ -55,25 +39,38 @@ export const AthleteCard = ({ name, competition, proof, partials }) => {
             });
     }, [partials]);
 
+    // 4. Função para alternar o estado de expandido/recolhido
+    const toggleExpand = () => {
+        setIsExpanded(prevState => !prevState);
+    };
+
     return (
-        <li className={styles.athleteCard}>
+        // 5. Adiciona o evento de clique no card inteiro
+        <li className={styles.athleteCard} onClick={toggleExpand}>
             <div className={styles.athleteHeader}>
-                <h3>{name}</h3>
-                <div className={styles.tags}>
-                    <span className={styles.tag}>{competition}</span>
-                    <span className={styles.tag}>{proof}</span>
+                <div className={styles.athleteInfo}>
+                    <h3>{athleteName}</h3>
+                    <div className={styles.tags}>
+                        <span className={styles.tag}>{competitionName}</span>
+                        <span className={styles.tag}>{proof}</span>
+                    </div>
                 </div>
+                {/* Adiciona o ícone que gira quando expandido */}
+                <FaChevronDown className={`${styles.toggleIcon} ${isExpanded ? styles.expanded : ''}`} />
             </div>
             
-            <div className={styles.timeCards}>
-                {processedPartials.map((p) => (
-                    <div key={p.distance} className={styles.timeCard}>
-                        <div className={styles.distance}>{p.distance}</div>
-                        <div className={styles.time}>{p.splitTime}</div>
-                        <div className={styles.split}>{p.cumulativeTime}</div>
-                    </div>
-                ))}
-            </div>
+            {/* 6. As parciais só serão renderizadas se 'isExpanded' for true */}
+            {isExpanded && (
+                <div className={styles.timeCards}>
+                    {processedPartials.map((p) => (
+                        <div key={p.distance} className={styles.timeCard}>
+                            <div className={styles.distance}>{p.distance}</div>
+                            <div className={styles.time}>{p.splitTime}</div>
+                            <div className={styles.split}>{p.cumulativeTime}</div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </li>
-    )
-}
+    );
+};

@@ -5,16 +5,23 @@
     justify-content: center;
     align-items: center;
     padding: global.$spacing-xxl global.$spacing-lg;
-    min-height: calc(100vh - 80px); // Subtrai a altura do header
+    min-height: calc(100vh - 80px);
 }
 
 .content {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: global.$spacing-xxl;
+    display: flex; // Usando flex para facilitar a reordenação
+    gap: global.$spacing-xxl; // Aumentado o espaço entre os cards
     width: 100%;
     max-width: 1200px;
-    align-items: start;
+    align-items: flex-start;
+}
+
+.loginSection {
+    flex: 1; // Define a proporção do card de login
+}
+
+.searchSection {
+    flex: 1.5; // Faz o card de busca ser um pouco maior
 }
 
 .loginSection, .searchSection {
@@ -22,6 +29,7 @@
     padding: global.$spacing-xl;
     border-radius: global.$border-radius;
     box-shadow: global.$shadow-lg;
+    width: 100%;
 
     h1 {
         text-align: center;
@@ -36,8 +44,17 @@
     }
 }
 
+// Media query para telas menores (ex: celulares e tablets na vertical)
 @media (max-width: 900px) {
     .content {
-        grid-template-columns: 1fr;
+        flex-direction: column; // Coloca os cards um sobre o outro
+    }
+
+    .loginSection {
+        order: 2; // Define que o login será o SEGUNDO item
+    }
+
+    .searchSection {
+        order: 1; // Define que a busca será o PRIMEIRO item
     }
 }

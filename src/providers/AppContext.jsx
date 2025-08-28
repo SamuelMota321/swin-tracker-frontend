@@ -27,17 +27,46 @@ export const AppContextPovider = ({ children }) => {
     setSearchList([]);
   }, [location]);
 
-  const userLogin = async (formData) => {
+const userLogin = async (formData) => {
     try {
       const { data } = await api.post("/auth/login", formData);
+      
       const standardizedUser = { ...data.user, role: data.user.type === 'adm' ? 'admin' : data.user.type };
       delete standardizedUser.type;
+
+      // Salva o token e o usuário de qualquer forma, pois o token é necessário
       localStorage.setItem("@TOKEN", data.token);
       localStorage.setItem("@USER", JSON.stringify(standardizedUser));
       setUserState(standardizedUser);
-      navigate("/competicoes");
+      
+      // VERIFICAÇÃO DA SENHA PADRÃO
+      if (formData.password === "12345678") {
+        toast.warn("Por favor, altere sua senha padrão.");
+        navigate("/trocar-senha"); // Redireciona para a página de troca de senha
+      } else {
+        navigate("/competicoes"); // Redirecionamento normal
+      }
     } catch (error) {
       toast.error("Login ou senha inválidos.");
+    }
+  };
+
+  const changePassword = async (formData) => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem("@TOKEN");
+      // Assumindo que a rota seja /auth/trocar-senha e o método seja PATCH
+      await api.post("/auth/trocar-senha", formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      toast.success("Senha alterada com sucesso! Por favor, faça o login novamente.");
+      userLogout(); // Desloga o usuário para ele entrar com a nova senha
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Não foi possível alterar a senha.";
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,16 +137,27 @@ export const AppContextPovider = ({ children }) => {
   };
 
   const patchPartials = async (formData) => {
+    setIsLoading(true); // ATIVA A TELA DE LOADING
     try {
       const token = localStorage.getItem("@TOKEN");
-      await api.patch("/tecnico/atualizar-parciais", formData.partials, { headers: { Authorization: `Bearer ${token}` } });
-    } catch (error) { console.log(error); }
+      const authorization = { headers: { Authorization: `Bearer ${token}` } };
+      await api.patch("/tecnico/atualizar-parciais", formData.partials, authorization);
+      
+      toast.success("Tempos atualizados com sucesso!"); // NOTIFICAÇÃO DE SUCESSO
+
+    } catch (error) {
+      console.log(error);
+      toast.error("Falha ao atualizar os tempos. Tente novamente."); // NOTIFICAÇÃO DE ERRO
+    } finally {
+      setIsLoading(false); // DESATIVA A TELA DE LOADING (SEMPRE)
+    }
   };
 
   return (
     <AppContext.Provider value={{
       userLogin, userLogout, registerCoach, userState, user: !!userState,
       isLoading, // Exporta o estado de loading
+      changePassword,
       searchAthletes, getAthleteList, competitionRegister, registerAthlete, searchCompetition, patchPartials, error, searchList, athleteList,
     }}>
       {children}

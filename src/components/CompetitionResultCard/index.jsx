@@ -31,16 +31,24 @@ const TimeInput = forwardRef(({ label, name, error, onChange: rhfOnChange, onBlu
 });
 
 export const CompetitionResultCard = ({ competitionName, proofName, data }) => {
+  // 1. Pega o estado 'isLoading' do contexto
+  const { patchPartials, isLoading } = useContext(AppContext);
+  
   const [times, setTimes] = useState(() => {
     const initialTimes = {};
-    data.forEach(item => { initialTimes[item.partial.id] = item.partial.time || ''; });
+    if (data) {
+      data.forEach(item => { initialTimes[item.partial.id] = item.partial.time || ''; });
+    }
     return initialTimes;
   });
   const [editingItemId, setEditingItemId] = useState(null);
-  const { control, trigger, formState: { errors }, setValue, watch } = useForm({ resolver: zodResolver(partialSchema), mode: 'onBlur' });
-  const { patchPartials } = useContext(AppContext);
+  const { control, trigger, formState: { errors }, setValue, watch } = useForm({
+    resolver: zodResolver(partialSchema),
+    mode: 'onBlur',
+  });
 
   const athletesGrouped = useMemo(() => {
+    if (!data) return {};
     return data.reduce((acc, currentItem) => {
       const athleteName = currentItem.partial.athlete.name;
       if (!acc[athleteName]) { acc[athleteName] = []; }
@@ -76,7 +84,6 @@ export const CompetitionResultCard = ({ competitionName, proofName, data }) => {
     
     if (payload.length > 0) {
       patchPartials({ partials: payload });
-      toast.success('Tempos enviados com sucesso!');
     } else {
       toast.warn('Nenhum tempo válido para enviar.');
     }
@@ -99,10 +106,10 @@ export const CompetitionResultCard = ({ competitionName, proofName, data }) => {
                 <div key={partialId} className={styles.partialItem}>
                   {isEditing ? (
                     <div className={styles.editForm}>
-                      <Controller name="time" control={control} defaultValue={currentTime} render={({ field }) => ( <TimeInput {...field} label={`Parcial ${meters}m`} error={errors.time} /> )} />
+                      <Controller name="time" control={control} defaultValue={currentTime} render={({ field }) => ( <TimeInput {...field} label={`Parcial ${meters}m`} error={errors.time} disabled={isLoading} /> )} />
                       <div className={styles.buttonGroup}>
-                        <Button type="button" text="Salvar" onClick={() => handleSaveClick(partialId)} size="small" />
-                        <Button type="button" text="Cancelar" onClick={handleCancelEdit} variant="secondary" size="small" />
+                        <Button type="button" text="Salvar" onClick={() => handleSaveClick(partialId)} size="small" disabled={isLoading} />
+                        <Button type="button" text="Cancelar" onClick={handleCancelEdit} variant="secondary" size="small" disabled={isLoading} />
                       </div>
                     </div>
                   ) : (
@@ -110,7 +117,7 @@ export const CompetitionResultCard = ({ competitionName, proofName, data }) => {
                       <span className={styles.partialMeters}>{meters}m</span>
                       <div className={styles.timeDisplay}>
                         <span>Tempo: {currentTime || "N/A"}</span>
-                        <FaPen size={15} color='#64B5F6' onClick={() => handleEditClick(partialId)} style={{ cursor: 'pointer' }} />
+                        <FaPen size={15} color={isLoading ? '#6C757D' : '#64B5F6'} onClick={() => !isLoading && handleEditClick(partialId)} style={{ cursor: isLoading ? 'not-allowed' : 'pointer' }} />
                       </div>
                     </>
                   )}
@@ -121,7 +128,14 @@ export const CompetitionResultCard = ({ competitionName, proofName, data }) => {
         </div>
       ))}
       <div className={styles.submitSection}>
-        <Button type="button" text="Enviar Tempos" onClick={handleFinalSubmit} size="large" />
+        {/* 2. Desabilita o botão e muda o texto durante o loading */}
+        <Button 
+          type="button" 
+          text={isLoading ? "Enviando..." : "Enviar Tempos"} 
+          onClick={handleFinalSubmit} 
+          size="large"
+          disabled={isLoading}
+        />
       </div>
     </li>
   );

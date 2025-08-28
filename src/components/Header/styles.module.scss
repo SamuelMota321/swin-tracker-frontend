@@ -8,25 +8,30 @@
     background: global.$color-primary-dark;
     box-shadow: global.$shadow-md;
     color: global.$color-white;
+    position: relative; // Necessário para o menu mobile
+}
 
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: global.$spacing-sm;
+.logo a {
+    display: flex;
+    align-items: center;
+    gap: global.$spacing-sm;
+    text-decoration: none; // Remove sublinhado do link da logo
 
-        img {
-            height: 40px;
-            width: 40px;
-        }
-
-        span {
-            font-size: 1.5rem;
-            font-weight: global.$font-weight-bold;
-            color: global.$color-white;
-        }
+    img {
+        height: 40px;
+        width: 40px;
     }
 
-    nav ul {
+    span {
+        font-size: 1.5rem;
+        font-weight: global.$font-weight-bold;
+        color: global.$color-white;
+    }
+}
+
+// Navegação para telas grandes
+.navMenu {
+    ul {
         display: flex;
         align-items: center;
         gap: global.$spacing-lg;
@@ -52,3 +57,47 @@
         }
     }
 }
+
+// Ícone do Hambúrguer (escondido em telas grandes)
+.hamburger {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 101; // Para ficar acima do menu
+    color: global.$color-white;
+}
+
+// Media Query para ativar o modo mobile
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; // Mostra o ícone
+    }
+
+    .navMenu {
+        position: fixed;
+        top: 0;
+        left: -100%; // Começa fora da tela
+        width: 100%;
+        height: 100vh;
+        background-color: global.$color-background;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: left 0.3s ease-in-out;
+        z-index: 100;
+
+        &.active {
+            left: 0; // Move o menu para dentro da tela
+        }
+
+        ul {
+            flex-direction: column;
+            gap: global.$spacing-xl;
+
+            li, a {
+                font-size: 1.5rem;
+            }
+        }
+    }
+} 
