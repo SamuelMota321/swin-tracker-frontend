@@ -28,26 +28,26 @@ export const AppContextPovider = ({ children }) => {
   }, [location]);
 
 const userLogin = async (formData) => {
+    setIsLoading(true); // ATIVA O LOADING
     try {
       const { data } = await api.post("/auth/login", formData);
-      
       const standardizedUser = { ...data.user, role: data.user.type === 'adm' ? 'admin' : data.user.type };
       delete standardizedUser.type;
 
-      // Salva o token e o usuário de qualquer forma, pois o token é necessário
       localStorage.setItem("@TOKEN", data.token);
       localStorage.setItem("@USER", JSON.stringify(standardizedUser));
       setUserState(standardizedUser);
       
-      // VERIFICAÇÃO DA SENHA PADRÃO
       if (formData.password === "12345678") {
         toast.warn("Por favor, altere sua senha padrão.");
-        navigate("/trocar-senha"); // Redireciona para a página de troca de senha
+        navigate("/trocar-senha");
       } else {
-        navigate("/competicoes"); // Redirecionamento normal
+        navigate("/competicoes");
       }
     } catch (error) {
       toast.error("Login ou senha inválidos.");
+    } finally {
+      setIsLoading(false); // DESATIVA O LOADING
     }
   };
 
@@ -114,11 +114,21 @@ const userLogin = async (formData) => {
     } catch (error) { console.log(error); }
   };
 
-  const registerAthlete = async (formData) => {
+const registerAthlete = async (formData) => {
+    setIsLoading(true); // ATIVA O LOADING
+    setError(""); // Limpa erros anteriores
     try {
       const token = localStorage.getItem("@TOKEN");
-      await api.post("/tecnico/adiconar-atleta", formData, { headers: { Authorization: `Bearer ${token}` } });
-    } catch (error) { setError(error.response.data.message); }
+      const authorization = { headers: { Authorization: `Bearer ${token}` } };
+      await api.post("/tecnico/adiconar-atleta", formData, authorization);
+      toast.success("Atleta registrado com sucesso!");
+    } catch (error) { 
+      const errorMessage = error.response?.data?.message || "Não foi possível registrar o atleta.";
+      setError(errorMessage); // Continua usando o estado de erro para a mensagem no formulário
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false); // DESATIVA O LOADING
+    }
   };
 
   const searchAthletes = async (searchTerm) => {

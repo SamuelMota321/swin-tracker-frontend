@@ -1,39 +1,39 @@
-import { useContext, useEffect } from "react"
-import { Input } from "../../components/Input"
-import { Select } from "../../components/Select"
-import { AppContext } from "../../providers/AppContext"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "../../components/Button"
-import { myAthletesSchema } from "../../schemas/myAthletesSchema"
-import styles from "./styles.module.scss"
+import { useContext, useEffect } from "react";
+import { Input } from "../../components/Input";
+import { Select } from "../../components/Select";
+import { AppContext } from "../../providers/AppContext";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "../../components/Button";
+import { myAthletesSchema } from "../../schemas/myAthletesSchema";
+import styles from "./styles.module.scss";
 
 export const MyAthletes = () => {
-  const { getAthleteList, athleteList, registerAthlete, error } = useContext(AppContext)
+  // Pega o isLoading do contexto
+  const { getAthleteList, athleteList, registerAthlete, error, isLoading } = useContext(AppContext);
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(myAthletesSchema)
   });
 
   const submit = async (formData) => {
-    try {
-      await registerAthlete(formData)
-      await getAthleteList()
-      reset() // Clear form after successful submission
-    } catch (err) {
-      console.error("Erro ao registrar atleta:", err)
+    await registerAthlete(formData);
+    // Apenas atualiza a lista e reseta o formulário se não houver erro
+    if (!error) {
+        await getAthleteList();
+        reset();
     }
-  }
+  };
 
   useEffect(() => {
-    getAthleteList()
-  }, [])
+    getAthleteList();
+  }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.formSection}>
           <h2>Registrar Atleta</h2>
-          <form onSubmit={handleSubmit(submit)} className={styles.form}>
+          <form onSubmit={handleSubmit(submit)}>
             {error && <div className={styles.errorMessage}>{error}</div>}
             
             <Input
@@ -41,28 +41,23 @@ export const MyAthletes = () => {
               placeholder="Digite o nome completo"
               {...register("name")}
               error={errors.name}
+              disabled={isLoading} // Desabilita durante o loading
             />
 
             <Select
               label="Categoria"
-              values={[
-                "Selecione uma categoria",
-                "Mirim",
-                "Petiz",
-                "Infantil",
-                "Juvenil",
-                "Junior",
-                "Senior"
-              ]}
+              values={[ "Selecione uma categoria", "Mirim", "Petiz", "Infantil", "Juvenil", "Junior", "Senior" ]}
               {...register("category")}
               error={errors.category}
+              disabled={isLoading} // Desabilita durante o loading
             />
 
             <Button 
               type="submit" 
-              text="Registrar" 
+              text={isLoading ? "Registrando..." : "Registrar"} 
               className={styles.submitButton}
               size="large"
+              disabled={isLoading} // Desabilita o botão
             />
           </form>
         </div>
@@ -81,5 +76,5 @@ export const MyAthletes = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
