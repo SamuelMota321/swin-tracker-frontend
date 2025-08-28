@@ -1,0 +1,88 @@
+@use "../../styles/global.scss" as global;
+
+.competitionCard {
+    background: global.$color-card-background;
+    border-radius: global.$border-radius;
+    padding: global.$spacing-lg;
+    border: 1px solid global.$color-border;
+    list-style-type: none;
+
+    h1 {
+        text-align: center;
+        margin-bottom: global.$spacing-xs;
+        font-size: 1.8rem;
+    }
+
+    > p {
+        text-align: center;
+        color: global.$color-text-secondary;
+        margin-bottom: global.$spacing-xl;
+    }
+}
+
+.athleteGroup {
+    margin-top: global.$spacing-lg;
+    padding-top: global.$spacing-lg;
+    border-top: 1px solid global.$color-border;
+
+    &:first-of-type {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+    }
+}
+
+.athleteName {
+    font-size: 1.5rem;
+    color: global.$color-primary-light;
+    margin-bottom: global.$spacing-md;
+}
+
+.partialsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: global.$spacing-md;
+}
+
+.partialItem {
+    background: global.$color-background;
+    padding: global.$spacing-md;
+    border-radius: global.$border-radius-small;
+    border-left: 4px solid global.$color-primary-dark;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.partialMeters {
+    font-size: 0.9rem;
+    font-weight: global.$font-weight-bold;
+    color: global.$color-text-secondary;
+    margin-bottom: global.$spacing-sm;
+}
+
+.timeDisplay {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span { 
+        color: global.$color-text-primary; 
+        font-size: 1.1rem;
+    }
+}
+
+.editForm {
+    .buttonGroup {
+        display: flex;
+        gap: global.$spacing-sm;
+        margin-top: global.$spacing-sm;
+    }
+}
+
+.submitSection {
+    margin-top: global.$spacing-xl;
+    padding-top: global.$spacing-lg;
+    border-top: 1px solid global.$color-border;
+    display: flex;
+    justify-content: flex-end;
+}
