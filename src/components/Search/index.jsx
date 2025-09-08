@@ -1,16 +1,37 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { Input } from "../Input";
 import { AthleteCard } from "./AthetesCard";
-import { CompetitionResultCard } from "../CompetitionResultCard"; // 1. Importe o novo componente
+import { CompetitionResultCard } from "../CompetitionResultCard";
 import { AppContext } from "../../providers/AppContext";
 import styles from "./styles.module.scss";
 
 export const SearchAthletes = () => {
   const { searchAthletes, searchList } = useContext(AppContext);
   const [searchInputContent, setSearchInputContent] = useState("");
+  const debounceTimeout = useRef(null);
 
-  const submit = (searchTerm) => {
+  const handleSearch = (searchTerm) => {
     searchAthletes(searchTerm);
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSearchInputContent(value);
+
+    // Limpa timeout anterior
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+
+    // Cria novo timeout de 1s
+    debounceTimeout.current = setTimeout(() => {
+      handleSearch(value);
+    }, 1000);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+      handleSearch(searchInputContent);
+    }
   };
 
   return (
@@ -20,11 +41,8 @@ export const SearchAthletes = () => {
         search="true"
         placeholder="Digite o nome do atleta..."
         value={searchInputContent}
-        onChange={(e) => {
-          const value = e.target.value;
-          setSearchInputContent(value);
-          submit(value);
-        }}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
       />
       {searchInputContent && (
         <div className={styles.searchResults}>
@@ -49,9 +67,28 @@ export const SearchAthletes = () => {
 export const SearchCompetition = () => {
   const { searchCompetition, searchList } = useContext(AppContext);
   const [searchInputContent, setSearchInputContent] = useState("");
+  const debounceTimeout = useRef(null);
 
-  const submit = (searchTerm) => {
+  const handleSearch = (searchTerm) => {
     searchCompetition(searchTerm);
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSearchInputContent(value);
+
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+
+    debounceTimeout.current = setTimeout(() => {
+      handleSearch(value);
+    }, 1000);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+      handleSearch(searchInputContent);
+    }
   };
 
   return (
@@ -61,11 +98,8 @@ export const SearchCompetition = () => {
         search="true"
         placeholder="Digite o nome da competição..."
         value={searchInputContent}
-        onChange={(e) => {
-          const value = e.target.value;
-          setSearchInputContent(value);
-          submit(value);
-        }}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
       />
       {searchInputContent && (
         <div className={styles.searchResults}>
@@ -75,7 +109,6 @@ export const SearchCompetition = () => {
               {searchList.map((data, i) => {
                 const proofsNames = Object.keys(data.proofs);
                 return proofsNames.map((proofName, j) => (
-                  // 2. Use o novo componente aqui
                   <CompetitionResultCard 
                     key={`${i}-${j}`}
                     competitionName={data.competitionName}
